@@ -24,7 +24,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -50,7 +50,7 @@
     --dark: #32373c;
     --accent: #3ba297;
     --border: #e5e5e3;
-    --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+    --font: 'Zen Kaku Gothic New', "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", "MS PGothic", Arial, serif;
     --font-en: 'Inter', sans-serif;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
     --container: 1080px;
@@ -232,74 +232,82 @@
   }
   .section-head--center .section-desc { margin-left: auto; margin-right: auto; }
 
-  /* ============ ABOUT (bluefarm: clean, horizontal) ============ */
+  /* ============ ABOUT (bluefarm style) ============ */
   .about-grid {
     display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: 72px;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
     align-items: center;
   }
   .about-visual {
-    aspect-ratio: 4/5;
-    background: var(--bg-gray);
-    border-radius: 4px;
     position: relative;
-    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 420px;
   }
-  .about-visual-inner {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    justify-content: flex-end;
-    padding: 32px;
-  }
-  .about-avatar {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    background: #fff;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--dark);
-    margin-bottom: 16px;
-  }
-  .about-visual-name {
-    font-size: .78rem;
-    color: var(--text-light);
-    letter-spacing: .04em;
-  }
-  .about-visual-name b {
-    display: block;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-top: 4px;
-  }
-  .about-text h3 {
-    font-size: 1.4rem;
+  .about-vertical-text {
+    writing-mode: vertical-rl;
+    font-size: 2.4rem;
     font-weight: 700;
     line-height: 1.8;
+    letter-spacing: .12em;
+    color: var(--dark);
+  }
+  .about-pencil-img {
+    position: absolute;
+    bottom: 20px;
+    left: 60px;
+    width: 160px;
+    height: auto;
+  }
+  .about-bracket {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 80px;
+  }
+  .about-text-block {}
+  .about-text-block p {
+    font-size: .95rem;
+    line-height: 2.2;
+    color: var(--text);
     margin-bottom: 24px;
   }
-  .about-text p {
-    font-size: .92rem;
-    line-height: 2.1;
-    color: var(--text-light);
-    margin-bottom: 14px;
-  }
-  .about-skills {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin-top: 28px; padding-top: 28px;
-    border-top: 1px solid var(--border);
-  }
-  .skill-tag {
-    font-size: .75rem;
-    color: var(--text-light);
-    background: var(--bg-gray);
-    border: 1px solid var(--border);
-    padding: 6px 16px;
-    border-radius: 3px;
+  .about-text-block p:first-child {
     font-weight: 500;
-    transition: all .3s;
   }
-  .skill-tag:hover { background: var(--dark); color: #fff; border-color: var(--dark); }
+  .about-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 14px 36px;
+    background: #e8c94a;
+    color: var(--dark);
+    font-size: .95rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity .3s;
+  }
+  .about-btn:hover { opacity: .8; }
+  .about-btn svg { transition: transform .3s; }
+  .about-btn:hover svg { transform: translateX(4px); }
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .about-visual {
+      min-height: 320px;
+      justify-content: center;
+    }
+    .about-vertical-text {
+      font-size: 1.8rem;
+    }
+  }
 
   /* ============ SERVICE (bluefarm: 2-col, minimal card) ============ */
   .service-grid {
@@ -571,52 +579,39 @@
   </div>
 </section>
 
-<!-- ========== NUMBERS ========== -->
-<div class="numbers">
-  <div class="container">
-    <div class="numbers-inner">
-      <div class="number-item reveal"><strong>50+</strong><span>制作実績</span></div>
-      <div class="number-item reveal"><strong>5年</strong><span>制作経験</span></div>
-      <div class="number-item reveal"><strong>98%</strong><span>リピート率</span></div>
-    </div>
-  </div>
-</div>
 
 <!-- ========== ABOUT ========== -->
 <section class="section" id="about">
   <div class="container">
-    <div class="section-head reveal">
-      <p class="section-en">About</p>
-      <h2 class="section-title">はじめまして。<br>WEBデザイナーの〇〇です。</h2>
-    </div>
-
     <div class="about-grid">
+      <!-- 左側：縦書きテキスト＋鉛筆イラスト -->
       <div class="about-visual reveal">
-        <div class="about-visual-inner">
-          <div class="about-avatar">
-            <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div class="about-visual-name">
-            WEBデザイナー
-            <b>〇〇 〇〇</b>
-          </div>
+        <!-- 右上の括弧 -->
+        <svg class="about-bracket" viewBox="0 0 60 80" fill="none" stroke="#555" stroke-width="2">
+          <path d="M5 75 Q5 5 55 5"/>
+        </svg>
+        <!-- 縦書きキャッチコピー -->
+        <div class="about-vertical-text">
+          枠を超える。<br>紡ぐ糸となる。
         </div>
+        <!-- 鉛筆イラスト（仮SVG） -->
+        <svg class="about-pencil-img" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80 60 Q40 30 20 50 Q10 58 15 65 Q20 72 35 60 Q55 42 80 60Z" stroke="#555" stroke-width="1.5" fill="none"/>
+          <rect x="85" y="30" width="60" height="14" rx="2" transform="rotate(-35 85 30)" fill="#4a90d9" stroke="#333" stroke-width="1"/>
+          <polygon points="82,55 78,65 88,60" fill="#f5d76e" stroke="#333" stroke-width="1"/>
+          <line x1="78" y1="65" x2="76" y2="68" stroke="#333" stroke-width="1"/>
+        </svg>
       </div>
 
-      <div class="about-text reveal">
-        <h3>お客様の想いに寄り添い、<br>ブランドの価値を引き出します。</h3>
-        <p>ホームページ・WEBサイト・アプリの企画・デザイン・制作を行っています。お客様のビジネスや想いに寄り添い、ブランドの価値を最大限に引き出すデザインをご提供します。</p>
-        <p>「つくって終わり」ではなく、公開後の運用やブランディングまでを見据えた制作を大切にしています。お客様と長く伴走できるパートナーでありたいと考えています。</p>
-
-        <div class="about-skills" role="list" aria-label="スキル一覧">
-          <span class="skill-tag" role="listitem">WordPress</span>
-          <span class="skill-tag" role="listitem">HTML / CSS</span>
-          <span class="skill-tag" role="listitem">JavaScript</span>
-          <span class="skill-tag" role="listitem">React / Next.js</span>
-          <span class="skill-tag" role="listitem">UI/UXデザイン</span>
-          <span class="skill-tag" role="listitem">SEO対策</span>
-          <span class="skill-tag" role="listitem">アプリ開発</span>
-        </div>
+      <!-- 右側：テキストコンテンツ -->
+      <div class="about-text-block reveal">
+        <p>ブルーファームは、<br>地域事業・サービス・商品などの<br>プロデュース・ブランディング・制作を行うデザイン会社です。</p>
+        <p>地域や企業が抱える課題の「芯」を見出す。<br>産業・業種・業界などのさまざまな「枠」を超え、新しいことを生み出していく。<br>その枠を、人と人・モノとコトを繋ぐための「糸」に変え、紡いでいく。</p>
+        <p>そんなクリエイティブを心がけ、お客さまと共に明るい未来を耕す会社を目指しています。</p>
+        <a href="#" class="about-btn">
+          私たちについて
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </div>
