@@ -100,13 +100,13 @@
   .nav-contact-link {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 24px;
-    background: var(--dark);
-    color: #fff !important;
+    background: #E8DB80;
+    color: var(--dark) !important;
     border-radius: 4px;
     font-size: .82rem; font-weight: 500;
     transition: opacity .3s;
   }
-  .nav-contact-link:hover { opacity: .8; color: #fff !important; }
+  .nav-contact-link:hover { opacity: .8; color: var(--dark) !important; }
 
   .hamburger { display: none; width: 28px; height: 20px; position: relative; cursor: pointer; background: none; border: none; }
   .hamburger span { position: absolute; left: 0; right: 0; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s var(--ease); }
@@ -348,35 +348,82 @@
     color: var(--text-light);
   }
 
-  /* ============ WORKS (bluefarm: grid, hover zoom) ============ */
+  /* ============ WORKS (monitor style) ============ */
   .works-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px 28px;
   }
   .work-card {
-    border-radius: 4px;
-    overflow: hidden;
-    background: var(--white);
-    border: 1px solid var(--border);
-    transition: transform .5s var(--ease), box-shadow .5s var(--ease);
     cursor: pointer;
+    transition: transform .5s var(--ease);
   }
   .work-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0,0,0,.06);
   }
-  .work-thumb {
-    aspect-ratio: 16/10;
+
+  /* --- Monitor Frame --- */
+  .monitor {
     position: relative;
-    overflow: hidden;
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 12px 12px 0 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.12);
   }
-  .work-thumb-bg {
-    position: absolute; inset: 0;
-    transition: transform .7s var(--ease);
+  .monitor-screen {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    border-radius: 4px 4px 0 0;
   }
-  .work-card:hover .work-thumb-bg { transform: scale(1.04); }
-  .work-info { padding: 24px 28px; }
+  .monitor-screen::-webkit-scrollbar {
+    width: 5px;
+  }
+  .monitor-screen::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  .monitor-screen::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+  .monitor-screen::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+  }
+  .monitor-screen img {
+    width: 100%;
+    display: block;
+  }
+  .monitor-chin {
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .monitor-chin-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #333;
+  }
+  .monitor-stand {
+    width: 40%;
+    height: 24px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+  }
+  .monitor-base {
+    width: 55%;
+    height: 6px;
+    margin: 0 auto;
+    background: #1a1a1a;
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* --- Work Info (below monitor) --- */
+  .work-info { padding: 18px 4px 0; }
   .work-category {
     font-size: .68rem; font-weight: 600;
     color: var(--text-muted);
@@ -386,10 +433,10 @@
     font-family: var(--font-en);
   }
   .work-name {
-    font-size: 1rem;
+    font-size: .95rem;
     font-weight: 700;
     line-height: 1.6;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .work-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .work-tag {
@@ -415,53 +462,34 @@
   .works-more a:hover { border-color: var(--dark); background: var(--dark); color: #fff; }
   .works-more a svg { transition: transform .3s; }
   .works-more a:hover svg { transform: translateX(4px); }
+  @media (max-width: 768px) {
+    .works-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  }
 
-  /* ============ CTA (bluefarm: dark bg) ============ */
-  .cta {
-    background: var(--dark);
-    padding: 100px 0;
-    text-align: center;
+  /* ============ FOOTER (expanding panel — zeroten style) ============ */
+  .footer-wrapper {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 8000;
+    clip-path: inset(calc(100% - 52px) calc(50% - 100px) 0px round 4px);
+    transition: clip-path 0.4s cubic-bezier(0.77, 0, 0.175, 1);
   }
-  .cta-en {
-    font-family: var(--font-en);
-    font-size: .7rem; font-weight: 600;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: rgba(255,255,255,.35);
-    margin-bottom: 20px;
+  .footer-wrapper.open,
+  .footer-wrapper.auto_open {
+    clip-path: inset(0px round 7px);
   }
-  .cta h2 {
-    color: #fff;
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 700;
-    line-height: 1.7;
-    margin-bottom: 14px;
-  }
-  .cta p {
-    color: rgba(255,255,255,.6);
-    font-size: .92rem;
-    line-height: 2;
-    margin-bottom: 40px;
-  }
-  .btn-white {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 16px 40px;
-    background: #fff;
-    color: var(--dark);
-    border-radius: 4px;
-    font-size: .88rem; font-weight: 600;
-    transition: opacity .3s, transform .3s;
-  }
-  .btn-white:hover { opacity: .9; transform: translateY(-1px); }
-  .btn-white svg { transition: transform .3s; }
-  .btn-white:hover svg { transform: translateX(3px); }
 
-  /* ============ FOOTER (bluefarm: centered, simple) ============ */
-  .footer {
-    background: var(--bg-gray);
-    color: var(--text-light);
-    padding: 64px 0 36px;
+  .footer-panel {
+    background: #E8DB80;
+    color: var(--text);
+    border-radius: 7px;
+    padding: 48px 40px 72px;
     text-align: center;
+    position: relative;
   }
+
   .footer-logo {
     font-size: 1.1rem; font-weight: 700;
     color: var(--dark);
@@ -474,21 +502,98 @@
     margin-bottom: 24px;
   }
   .footer-nav a {
-    font-size: .82rem; color: var(--text-light);
+    font-size: .82rem; color: rgba(50,55,60,0.65);
     transition: color .3s;
   }
-  .footer-nav a:hover { color: var(--text); }
+  .footer-nav a:hover { color: var(--dark); }
   .footer-address {
     font-size: .78rem;
-    color: var(--text-muted);
+    color: rgba(50,55,60,0.5);
     margin-bottom: 20px;
     font-style: normal;
   }
   .footer-copy {
     font-size: .72rem;
-    color: var(--text-muted);
+    color: rgba(50,55,60,0.5);
     padding-top: 20px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(50,55,60,0.15);
+  }
+
+  /* Centered toggle button at bottom — visible through clip-path when closed */
+  .footer-toggle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 2;
+  }
+  .footer-toggle-label {
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dark);
+    letter-spacing: 0.06em;
+  }
+  .footer-toggle-lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 20px;
+    height: 20px;
+  }
+  .footer-toggle-lines span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--dark);
+    border-radius: 1px;
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  /* Change label & icon when open */
+  .footer-wrapper.open .footer-toggle-open,
+  .footer-wrapper.auto_open .footer-toggle-open { display: none; }
+  .footer-toggle-close { display: none; }
+  .footer-wrapper.open .footer-toggle-close,
+  .footer-wrapper.auto_open .footer-toggle-close { display: inline; }
+  .footer-wrapper.open .footer-toggle-lines span:nth-child(1),
+  .footer-wrapper.auto_open .footer-toggle-lines span:nth-child(1) {
+    transform: rotate(45deg) translate(2px, 2px);
+  }
+  .footer-wrapper.open .footer-toggle-lines span:nth-child(2),
+  .footer-wrapper.auto_open .footer-toggle-lines span:nth-child(2) {
+    transform: rotate(-45deg) translate(2px, -2px);
+  }
+
+  /* Backdrop overlay */
+  .footer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(10px);
+    z-index: 7999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  .footer-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .footer-spacer {
+    height: 300px;
   }
 
   /* ============ REVEAL ============ */
@@ -504,6 +609,42 @@
   .palette-6 { background: linear-gradient(135deg, #d3dee8 0%, #b0c0d4 100%); }
 
   /* ============ RESPONSIVE ============ */
+  /* ============ FLOATING CONTACT BUTTON (bottom-right) ============ */
+  .fab-contact {
+    position: fixed;
+    bottom: 32px;
+    right: 24px;
+    z-index: 8500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    background: #E8DB80;
+    color: var(--dark) !important;
+    font-family: var(--font-en);
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    border-radius: 100px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    transition: transform .3s var(--ease), opacity .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .fab-contact:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+    color: var(--dark) !important;
+  }
+  .fab-contact svg { transition: transform .3s var(--ease); }
+  .fab-contact:hover svg { transform: translateX(3px); }
+
+  /* 既存フッターパネル展開中は非表示 */
+  .footer-wrapper.open ~ .fab-contact,
+  .footer-wrapper.auto_open ~ .fab-contact {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+  }
+
   @media (max-width: 900px) {
     .container { padding: 0 24px; }
     .nav-inner { display: flex; justify-content: space-between; padding: 0 24px; }
@@ -515,12 +656,23 @@
     .about-visual { max-height: 300px; }
     .service-grid { grid-template-columns: 1fr; }
     .works-grid { grid-template-columns: 1fr; }
-    .cta { padding: 72px 0; }
   }
   @media (max-width: 600px) {
     .hero-actions { flex-direction: column; }
     .numbers-inner { grid-template-columns: 1fr; gap: 20px; }
     .footer-nav { flex-direction: column; gap: 16px; }
+    .footer-panel { padding: 36px 24px 64px; }
+    .footer-spacer { height: 200px; }
+    .footer-wrapper {
+      clip-path: inset(calc(100% - 48px) calc(50% - 80px) 0px round 4px);
+    }
+    .footer-toggle { width: 160px; height: 48px; }
+    .fab-contact {
+      bottom: 76px;
+      right: 16px;
+      padding: 12px 20px;
+      font-size: .78rem;
+    }
   }
 </style>
 </head>
@@ -628,7 +780,14 @@
 
     <div class="works-grid">
       <article class="work-card reveal">
-        <div class="work-thumb"><div class="work-thumb-bg palette-1"></div></div>
+        <div class="monitor">
+          <div class="monitor-screen">
+            <img src="https://placehold.co/800x1800/e8f0fe/4a90d9?text=Site+1%0AScroll+%E2%86%93" alt="制作事例1">
+          </div>
+          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
         <div class="work-info">
           <p class="work-category">Corporate</p>
           <h3 class="work-name">建築設計事務所 コーポレートサイト</h3>
@@ -637,7 +796,14 @@
       </article>
 
       <article class="work-card reveal">
-        <div class="work-thumb"><div class="work-thumb-bg palette-2"></div></div>
+        <div class="monitor">
+          <div class="monitor-screen">
+            <img src="https://placehold.co/800x1800/fef3e0/e67e22?text=Site+2%0AScroll+%E2%86%93" alt="制作事例2">
+          </div>
+          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
         <div class="work-info">
           <p class="work-category">Clinic</p>
           <h3 class="work-name">歯科クリニック ホームページリニューアル</h3>
@@ -646,7 +812,14 @@
       </article>
 
       <article class="work-card reveal">
-        <div class="work-thumb"><div class="work-thumb-bg palette-3"></div></div>
+        <div class="monitor">
+          <div class="monitor-screen">
+            <img src="https://placehold.co/800x1800/e8f5e9/2e7d32?text=Site+3%0AScroll+%E2%86%93" alt="制作事例3">
+          </div>
+          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
         <div class="work-info">
           <p class="work-category">Cafe &amp; Restaurant</p>
           <h3 class="work-name">カフェ・ベーカリー 店舗サイト</h3>
@@ -655,7 +828,14 @@
       </article>
 
       <article class="work-card reveal">
-        <div class="work-thumb"><div class="work-thumb-bg palette-4"></div></div>
+        <div class="monitor">
+          <div class="monitor-screen">
+            <img src="https://placehold.co/800x1800/fce4ec/c62828?text=Site+4%0AScroll+%E2%86%93" alt="制作事例4">
+          </div>
+          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
         <div class="work-info">
           <p class="work-category">App</p>
           <h3 class="work-name">フィットネスジム 予約アプリ</h3>
@@ -664,7 +844,14 @@
       </article>
 
       <article class="work-card reveal">
-        <div class="work-thumb"><div class="work-thumb-bg palette-5"></div></div>
+        <div class="monitor">
+          <div class="monitor-screen">
+            <img src="https://placehold.co/800x1800/f3e5f5/7b1fa2?text=Site+5%0AScroll+%E2%86%93" alt="制作事例5">
+          </div>
+          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
         <div class="work-info">
           <p class="work-category">Beauty</p>
           <h3 class="work-name">美容室 ブランドサイト制作</h3>
@@ -673,7 +860,14 @@
       </article>
 
       <article class="work-card reveal">
-        <div class="work-thumb"><div class="work-thumb-bg palette-6"></div></div>
+        <div class="monitor">
+          <div class="monitor-screen">
+            <img src="https://placehold.co/800x1800/e0f2f1/00695c?text=Site+6%0AScroll+%E2%86%93" alt="制作事例6">
+          </div>
+          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
         <div class="work-info">
           <p class="work-category">Corporate</p>
           <h3 class="work-name">製造業 コーポレートサイト制作</h3>
@@ -721,22 +915,11 @@
   </div>
 </section>
 
-<!-- ========== CTA ========== -->
-<section class="cta">
-  <div class="container">
-    <p class="cta-en reveal">Contact</p>
-    <h2 class="reveal">まずはお気軽に<br>ご相談ください。</h2>
-    <p class="reveal">ホームページ制作・アプリ開発のこと、何でもお気軽にお問い合わせください。<br>まだ具体的でなくても大丈夫です。</p>
-    <a href="contact.html" class="btn-white reveal">
-      お問い合わせはこちら
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-</section>
-
 <!-- ========== FOOTER ========== -->
-<footer class="footer" role="contentinfo">
-  <div class="container">
+<div class="footer-spacer"></div>
+<div class="footer-backdrop" id="footerBackdrop"></div>
+<footer class="footer-wrapper" id="footerWrapper" role="contentinfo">
+  <div class="footer-panel">
     <p class="footer-logo">PORTFOLIO</p>
     <ul class="footer-nav">
       <li><a href="#about">私たちについて</a></li>
@@ -746,8 +929,23 @@
     </ul>
     <address class="footer-address">東京都渋谷区 | your-email@example.com</address>
     <p class="footer-copy">&copy; 2026 PORTFOLIO. All Rights Reserved.</p>
+    <button class="footer-toggle" id="footerToggle" aria-label="フッターを開閉">
+      <span class="footer-toggle-label">
+        <span class="footer-toggle-open">Linplan</span>
+        <span class="footer-toggle-close">CLOSE</span>
+      </span>
+      <span class="footer-toggle-lines">
+        <span></span>
+        <span></span>
+      </span>
+    </button>
   </div>
 </footer>
+
+<a href="contact.html" class="fab-contact" aria-label="お問い合わせページへ">
+  <span>Contact</span>
+  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+</a>
 
 <script>
   const nav = document.getElementById('nav');
@@ -768,6 +966,62 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ========== FOOTER EXPANDING PANEL ==========
+  (() => {
+    const wrapper = document.getElementById('footerWrapper');
+    const toggle = document.getElementById('footerToggle');
+    const backdrop = document.getElementById('footerBackdrop');
+    let isManualOpen = false;
+    let lastScrollY = window.scrollY;
+
+    function openFooter(manual) {
+      wrapper.classList.remove('auto_open');
+      if (manual) {
+        wrapper.classList.add('open');
+        backdrop.classList.add('active');
+        isManualOpen = true;
+      } else {
+        wrapper.classList.add('auto_open');
+      }
+    }
+
+    function closeFooter() {
+      wrapper.classList.remove('open', 'auto_open');
+      backdrop.classList.remove('active');
+      isManualOpen = false;
+    }
+
+    // Toggle button click (CONTACT / CLOSE)
+    toggle.addEventListener('click', () => {
+      if (wrapper.classList.contains('open') || wrapper.classList.contains('auto_open')) {
+        closeFooter();
+      } else {
+        openFooter(true);
+      }
+    });
+
+    // Click backdrop to close
+    backdrop.addEventListener('click', closeFooter);
+
+    // Scroll-based auto open/close
+    window.addEventListener('scroll', () => {
+      if (isManualOpen) return;
+
+      const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollY / maxScroll;
+
+      if (scrollPercent > 0.8 && scrollY > lastScrollY) {
+        if (!wrapper.classList.contains('auto_open')) openFooter(false);
+      }
+      if (scrollY < lastScrollY && wrapper.classList.contains('auto_open')) {
+        wrapper.classList.remove('auto_open');
+      }
+
+      lastScrollY = scrollY;
+    }, { passive: true });
+  })();
 </script>
 
 </body>

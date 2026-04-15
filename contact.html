@@ -71,11 +71,11 @@
   .nav-contact-link {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 24px;
-    background: var(--dark); color: #fff !important;
+    background: #E8DB80; color: var(--dark) !important;
     border-radius: 4px; font-size: .82rem; font-weight: 500;
     transition: opacity .3s;
   }
-  .nav-contact-link:hover { opacity: .8; color: #fff !important; }
+  .nav-contact-link:hover { opacity: .8; color: var(--dark) !important; }
 
   .hamburger { display: none; width: 28px; height: 20px; position: relative; cursor: pointer; background: none; border: none; }
   .hamburger span { position: absolute; left: 0; right: 0; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s var(--ease); }
@@ -252,44 +252,117 @@
   .form-submit svg { transition: transform .3s; }
   .form-submit:hover svg { transform: translateX(3px); }
 
-  /* ============ FOOTER (centered, simple) ============ */
-  .footer {
-    background: var(--bg-gray);
-    color: var(--text-light);
-    padding: 64px 0 36px;
-    text-align: center;
+  /* ============ FOOTER (expanding panel — zeroten style) ============ */
+  .footer-wrapper {
+    position: fixed; bottom: 10px; left: 10px; right: 10px; z-index: 8000;
+    clip-path: inset(calc(100% - 52px) calc(50% - 100px) 0px round 4px);
+    transition: clip-path 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  .footer-wrapper.open,
+  .footer-wrapper.auto_open { clip-path: inset(0px round 7px); }
+  .footer-panel {
+    background: #E8DB80; color: var(--text); border-radius: 7px;
+    padding: 48px 40px 72px; text-align: center; position: relative;
   }
   .footer-logo {
-    font-size: 1.1rem; font-weight: 700;
-    color: var(--dark);
-    letter-spacing: .04em;
-    margin-bottom: 24px;
+    font-size: 1.1rem; font-weight: 700; color: var(--dark);
+    letter-spacing: .04em; margin-bottom: 24px;
   }
   .footer-nav {
-    list-style: none;
-    display: flex; justify-content: center; flex-wrap: wrap; gap: 28px;
-    margin-bottom: 24px;
+    list-style: none; display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 28px; margin-bottom: 24px;
   }
-  .footer-nav a {
-    font-size: .82rem; color: var(--text-light);
-    transition: color .3s;
-  }
-  .footer-nav a:hover { color: var(--text); }
+  .footer-nav a { font-size: .82rem; color: rgba(50,55,60,0.65); transition: color .3s; }
+  .footer-nav a:hover { color: var(--dark); }
   .footer-address {
-    font-size: .78rem; color: var(--text-muted);
+    font-size: .78rem; color: rgba(50,55,60,0.5);
     margin-bottom: 20px; font-style: normal;
   }
   .footer-copy {
-    font-size: .72rem; color: var(--text-muted);
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
+    font-size: .72rem; color: rgba(50,55,60,0.5);
+    padding-top: 20px; border-top: 1px solid rgba(50,55,60,0.15);
   }
+  .footer-toggle {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 52px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer; background: none; border: none; padding: 0; z-index: 2;
+  }
+  .footer-toggle-label {
+    font-family: var(--font-en); font-size: 11px; font-weight: 600;
+    color: var(--dark); letter-spacing: 0.06em;
+  }
+  .footer-toggle-lines {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; width: 20px; height: 20px;
+  }
+  .footer-toggle-lines span {
+    display: block; width: 16px; height: 2px; background: var(--dark);
+    border-radius: 1px; transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .footer-wrapper.open .footer-toggle-open,
+  .footer-wrapper.auto_open .footer-toggle-open { display: none; }
+  .footer-toggle-close { display: none; }
+  .footer-wrapper.open .footer-toggle-close,
+  .footer-wrapper.auto_open .footer-toggle-close { display: inline; }
+  .footer-wrapper.open .footer-toggle-lines span:nth-child(1),
+  .footer-wrapper.auto_open .footer-toggle-lines span:nth-child(1) {
+    transform: rotate(45deg) translate(2px, 2px);
+  }
+  .footer-wrapper.open .footer-toggle-lines span:nth-child(2),
+  .footer-wrapper.auto_open .footer-toggle-lines span:nth-child(2) {
+    transform: rotate(-45deg) translate(2px, -2px);
+  }
+  .footer-backdrop {
+    position: fixed; inset: 0; background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(10px); z-index: 7999;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  .footer-backdrop.active { opacity: 1; pointer-events: auto; }
+  .footer-spacer { height: 300px; }
 
   /* ============ REVEAL ============ */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
   .reveal.visible { opacity: 1; transform: none; }
 
   /* ============ RESPONSIVE ============ */
+  /* ============ FLOATING CONTACT BUTTON (bottom-right) ============ */
+  .fab-contact {
+    position: fixed;
+    bottom: 32px;
+    right: 24px;
+    z-index: 8500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    background: #E8DB80;
+    color: var(--dark) !important;
+    font-family: var(--font-en);
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    border-radius: 100px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    transition: transform .3s var(--ease), opacity .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .fab-contact:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+    color: var(--dark) !important;
+  }
+  .fab-contact svg { transition: transform .3s var(--ease); }
+  .fab-contact:hover svg { transform: translateX(3px); }
+
+  /* 既存フッターパネル展開中は非表示 */
+  .footer-wrapper.open ~ .fab-contact,
+  .footer-wrapper.auto_open ~ .fab-contact {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+  }
+
   @media (max-width: 900px) {
     .container { padding: 0 24px; }
     .nav-inner { display: flex; justify-content: space-between; padding: 0 24px; }
@@ -303,6 +376,18 @@
   }
   @media (max-width: 600px) {
     .footer-nav { flex-direction: column; gap: 16px; }
+    .footer-panel { padding: 36px 24px 64px; }
+    .footer-spacer { height: 200px; }
+    .footer-wrapper {
+      clip-path: inset(calc(100% - 48px) calc(50% - 80px) 0px round 4px);
+    }
+    .footer-toggle { width: 160px; height: 48px; }
+    .fab-contact {
+      bottom: 76px;
+      right: 16px;
+      padding: 12px 20px;
+      font-size: .78rem;
+    }
   }
 </style>
 </head>
@@ -437,8 +522,10 @@
 </section>
 
 <!-- ========== FOOTER ========== -->
-<footer class="footer" role="contentinfo">
-  <div class="container">
+<div class="footer-spacer"></div>
+<div class="footer-backdrop" id="footerBackdrop"></div>
+<footer class="footer-wrapper" id="footerWrapper" role="contentinfo">
+  <div class="footer-panel">
     <p class="footer-logo">PORTFOLIO</p>
     <ul class="footer-nav">
       <li><a href="index.html#about">私たちについて</a></li>
@@ -448,8 +535,23 @@
     </ul>
     <address class="footer-address">東京都渋谷区 | your-email@example.com</address>
     <p class="footer-copy">&copy; 2026 PORTFOLIO. All Rights Reserved.</p>
+    <button class="footer-toggle" id="footerToggle" aria-label="フッターを開閉">
+      <span class="footer-toggle-label">
+        <span class="footer-toggle-open">Linplan</span>
+        <span class="footer-toggle-close">CLOSE</span>
+      </span>
+      <span class="footer-toggle-lines">
+        <span></span>
+        <span></span>
+      </span>
+    </button>
   </div>
 </footer>
+
+<a href="contact.html" class="fab-contact" aria-label="お問い合わせページへ">
+  <span>Contact</span>
+  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+</a>
 
 <script>
   const nav = document.getElementById('nav');
@@ -475,6 +577,57 @@
     e.preventDefault();
     alert('送信ありがとうございます！');
   });
+
+  // ========== FOOTER EXPANDING PANEL ==========
+  (() => {
+    const wrapper = document.getElementById('footerWrapper');
+    const toggle = document.getElementById('footerToggle');
+    const backdrop = document.getElementById('footerBackdrop');
+    let isManualOpen = false;
+    let lastScrollY = window.scrollY;
+
+    function openFooter(manual) {
+      wrapper.classList.remove('auto_open');
+      if (manual) {
+        wrapper.classList.add('open');
+        backdrop.classList.add('active');
+        isManualOpen = true;
+      } else {
+        wrapper.classList.add('auto_open');
+      }
+    }
+
+    function closeFooter() {
+      wrapper.classList.remove('open', 'auto_open');
+      backdrop.classList.remove('active');
+      isManualOpen = false;
+    }
+
+    toggle.addEventListener('click', () => {
+      if (wrapper.classList.contains('open') || wrapper.classList.contains('auto_open')) {
+        closeFooter();
+      } else {
+        openFooter(true);
+      }
+    });
+
+    backdrop.addEventListener('click', closeFooter);
+
+    window.addEventListener('scroll', () => {
+      if (isManualOpen) return;
+      const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollY / maxScroll;
+
+      if (scrollPercent > 0.8 && scrollY > lastScrollY) {
+        if (!wrapper.classList.contains('auto_open')) openFooter(false);
+      }
+      if (scrollY < lastScrollY && wrapper.classList.contains('auto_open')) {
+        wrapper.classList.remove('auto_open');
+      }
+      lastScrollY = scrollY;
+    }, { passive: true });
+  })();
 </script>
 
 </body>

@@ -4,7 +4,8 @@
       "Bash(dir /s /b \"C:\\\\MyPortfolio\")",
       "Bash(npx create-next-app:*)",
       "Bash(npx create-next-app@latest myportfolio-temp --typescript --app --src-dir --no-tailwind --no-eslint --import-alias \"@/*\" --use-npm --yes)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "WebFetch(domain:zeroten.jp)"
     ]
   }
 }
