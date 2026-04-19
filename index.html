@@ -125,11 +125,18 @@
   .mobile-menu a { font-size: 1.1rem; font-weight: 500; color: var(--text); letter-spacing: .03em; }
   .mobile-menu-close { position: absolute; top: 22px; right: 28px; background: none; border: none; font-size: 2rem; color: var(--text); cursor: pointer; }
 
-  /* ============ HERO (bluefarm: large, centered, minimal) ============ */
+  /* ============ HERO (main video) ============ */
   .hero {
-    padding: 200px 0 120px;
-    text-align: center;
+    --hero-gap: 80px;
+    padding: 80px var(--hero-gap) var(--hero-gap);
     position: relative;
+  }
+  .hero-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border-radius: 16px;
   }
   .hero-en {
     font-family: var(--font-en);
@@ -650,7 +657,7 @@
     .nav-inner { display: flex; justify-content: space-between; padding: 0 24px; }
     .nav-links-left, .nav-links-right { display: none; }
     .hamburger { display: block; }
-    .hero { padding: 160px 0 80px; }
+    .hero { --hero-gap: 40px; }
     .section { padding: 80px 0; }
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
     .about-visual { max-height: 300px; }
@@ -658,6 +665,7 @@
     .works-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
+    .hero { --hero-gap: 24px; }
     .hero-actions { flex-direction: column; }
     .numbers-inner { grid-template-columns: 1fr; gap: 20px; }
     .footer-nav { flex-direction: column; gap: 16px; }
@@ -710,25 +718,7 @@
 
 <!-- ========== HERO ========== -->
 <section class="hero" id="top">
-  <div class="container">
-    <p class="hero-en reveal">Web Design &amp; App Development</p>
-    <h1 class="hero-title reveal">
-      つくる人が輝く<br>未来をデザインする。
-    </h1>
-    <p class="hero-sub reveal">
-      ホームページ・アプリ制作を通じて、<br>
-      ブランドの魅力を最大限に引き出します。<br>
-      丁寧なヒアリングと確かな技術で、<br>
-      長く愛されるプロダクトをつくります。
-    </p>
-    <div class="hero-actions reveal">
-      <a href="contact.html" class="btn-dark">
-        お問い合わせ
-        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#works" class="btn-outline">制作事例を見る</a>
-    </div>
-  </div>
+  <video class="hero-video" src="mv_movie.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
 </section>
 
 
