@@ -5,7 +5,16 @@
       "Bash(npx create-next-app:*)",
       "Bash(npx create-next-app@latest myportfolio-temp --typescript --app --src-dir --no-tailwind --no-eslint --import-alias \"@/*\" --use-npm --yes)",
       "Bash(npm run build:*)",
-      "WebFetch(domain:zeroten.jp)"
+      "WebFetch(domain:zeroten.jp)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(mkdir -p /tmp/design-extract)",
+      "Read(//tmp/**)",
+      "Bash(tar -xzf \"C:\\\\Users\\\\tsubo\\\\.claude\\\\projects\\\\C--Users-tsubo-MyProject-MyPortfolio\\\\c7931fb2-9207-416b-946f-f10e52c06e0f\\\\tool-results\\\\webfetch-1776564003876-9jn4eb.bin\")",
+      "Bash(cp \"/c/Users/tsubo/.claude/projects/C--Users-tsubo-MyProject-MyPortfolio/c7931fb2-9207-416b-946f-f10e52c06e0f/tool-results/webfetch-1776564003876-9jn4eb.bin\" /tmp/design-extract/design.tar.gz)",
+      "Bash(tar -xzf design.tar.gz)",
+      "Bash(mkdir -p /tmp/design-extract2)",
+      "Bash(cp \"/c/Users/tsubo/.claude/projects/C--Users-tsubo-MyProject-MyPortfolio/c7931fb2-9207-416b-946f-f10e52c06e0f/tool-results/webfetch-1776567307889-pevh4s.bin\" /tmp/design-extract2/design.tar.gz)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }

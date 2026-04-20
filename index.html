@@ -3,34 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PORTFOLIO | ホームページ・アプリ制作</title>
+<title>LinPlan | ホームページ・アプリ制作</title>
 
 <meta name="description" content="ホームページ・アプリ制作を通じて、ブランドの魅力を最大限に引き出します。丁寧なヒアリングと確かなデザインで、長く愛されるサイトをつくります。">
 <meta name="keywords" content="ホームページ制作, アプリ制作, WEBデザイン, WordPress, コーポレートサイト, レスポンシブ, SEO対策">
-<meta name="author" content="Your Name">
+<meta name="author" content="LinPlan">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://example.com/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="PORTFOLIO | ホームページ・アプリ制作">
+<meta property="og:title" content="LinPlan | ホームページ・アプリ制作">
 <meta property="og:description" content="丁寧なヒアリングと確かなデザインで、長く愛されるサイトをつくります。">
 <meta property="og:url" content="https://example.com/">
-<meta property="og:site_name" content="PORTFOLIO">
+<meta property="og:site_name" content="LinPlan">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PORTFOLIO | ホームページ・アプリ制作">
+<meta name="twitter:title" content="LinPlan | ホームページ・アプリ制作">
 <meta name="twitter:description" content="丁寧なヒアリングと確かなデザインで、長く愛されるサイトをつくります。">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Klee+One:wght@400;600&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "PORTFOLIO",
+  "name": "LinPlan",
   "description": "ホームページ・アプリ制作を通じて、ブランドの魅力を最大限に引き出します。",
   "url": "https://example.com/",
   "address": { "@type": "PostalAddress", "addressLocality": "渋谷区", "addressRegion": "東京都", "addressCountry": "JP" },
@@ -40,128 +41,122 @@
 </script>
 
 <style>
-  :root {
-    --white: #ffffff;
-    --bg: #ffffff;
-    --bg-gray: #f6f6f4;
-    --text: #313131;
-    --text-light: #6b6b6b;
-    --text-muted: #a0a0a0;
-    --dark: #32373c;
-    --accent: #3ba297;
-    --border: #e5e5e3;
-    --font: 'Zen Kaku Gothic New', "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", "MS PGothic", Arial, serif;
-    --font-en: 'Inter', sans-serif;
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --container: 1080px;
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 2; font-weight: 400; font-size: 15px; overflow-x: hidden; }
-  img { max-width: 100%; display: block; }
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: var(--dark); color: #fff; }
-
-  .container { max-width: var(--container); margin: 0 auto; padding: 0 40px; }
-
-  /* ============ NAV (bluefarm: centered logo) ============ */
-  .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(255,255,255,0);
-    transition: background .4s var(--ease), box-shadow .4s var(--ease);
-  }
-  .nav.scrolled {
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 1px 0 var(--border);
-  }
-  .nav-inner {
-    max-width: var(--container);
-    margin: 0 auto; padding: 0 40px;
-    height: 80px;
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-  }
-  .nav-links-left, .nav-links-right {
-    list-style: none; display: flex; align-items: center; gap: 36px;
-  }
-  .nav-links-left { justify-content: flex-end; }
-  .nav-links-right { justify-content: flex-start; }
-  .nav-links-left a, .nav-links-right a {
-    font-size: .85rem; font-weight: 500; color: var(--text-light);
-    letter-spacing: .03em; transition: color .3s;
-  }
-  .nav-links-left a:hover, .nav-links-right a:hover { color: var(--text); }
-  .nav-logo {
-    font-weight: 700; font-size: 1.2rem; letter-spacing: .04em;
-    text-align: center; padding: 0 32px; color: var(--dark);
-  }
-  .nav-contact-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 24px;
-    background: #E8DB80;
-    color: var(--dark) !important;
-    border-radius: 4px;
-    font-size: .82rem; font-weight: 500;
-    transition: opacity .3s;
-  }
-  .nav-contact-link:hover { opacity: .8; color: var(--dark) !important; }
-
-  .hamburger { display: none; width: 28px; height: 20px; position: relative; cursor: pointer; background: none; border: none; }
-  .hamburger span { position: absolute; left: 0; right: 0; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s var(--ease); }
-  .hamburger span:nth-child(1) { top: 2px; }
-  .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-  .hamburger span:nth-child(3) { bottom: 2px; }
-
-  .mobile-menu {
-    position: fixed; inset: 0; background: rgba(255,255,255,0.98);
-    backdrop-filter: blur(10px);
-    z-index: 150; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity .35s var(--ease);
-  }
-  .mobile-menu.open { opacity: 1; pointer-events: all; }
-  .mobile-menu ul { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 28px; }
-  .mobile-menu a { font-size: 1.1rem; font-weight: 500; color: var(--text); letter-spacing: .03em; }
-  .mobile-menu-close { position: absolute; top: 22px; right: 28px; background: none; border: none; font-size: 2rem; color: var(--text); cursor: pointer; }
-
-  /* ============ HERO (main video) ============ */
+  /* ============ HERO (floating flat-design icon tiles) ============ */
   .hero {
     --hero-gap: 80px;
-    padding: 80px var(--hero-gap) var(--hero-gap);
+    padding: 0;
     position: relative;
   }
-  .hero-video {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 0;
-    border-radius: 16px;
+  .hero-frame {
+    width: 100vw;
+    height: 100vh;
+    background: #f8f8f6;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
   }
-  .hero-en {
-    font-family: var(--font-en);
-    font-size: .7rem;
-    font-weight: 500;
-    letter-spacing: .2em;
+  .hero-tile {
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.82;
+    overflow: hidden;
+  }
+  .hero-tile svg {
+    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.2));
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: rgba(248, 248, 246, 0.55);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: absolute; inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .hero-kicker {
+    font-family: var(--font-display);
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--text-muted);
-    margin-bottom: 36px;
+    margin-bottom: 28px;
   }
-  .hero-title {
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
+  .hero-logo {
+    font-family: var(--font-display);
+    font-size: clamp(4.5rem, 11vw, 9rem);
     font-weight: 700;
-    line-height: 1.7;
     letter-spacing: .04em;
+    line-height: 1;
     margin-bottom: 36px;
+    color: var(--dark);
   }
-  .hero-sub {
-    font-size: .95rem;
-    line-height: 2.2;
+  .hero-logo span { color: var(--accent); }
+  .hero-divider {
+    width: 56px;
+    height: 2px;
+    background: #E8DB80;
+    border-radius: 2px;
+    margin: 0 auto 28px;
+  }
+  .hero-tagline {
+    font-family: var(--font-hand);
+    font-size: clamp(1.1rem, 1.9vw, 1.55rem);
+    font-weight: 400;
+    line-height: 2;
+    letter-spacing: .04em;
     color: var(--text-light);
-    max-width: 520px;
-    margin: 0 auto 52px;
+    margin-bottom: 32px;
   }
-  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 32px;
+    background: #E8DB80;
+    color: var(--dark);
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-size: .86rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(232, 219, 128, 0.4);
+    transition: opacity .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .hero-cta:hover { opacity: .9; transform: translateY(-1px); color: var(--dark); box-shadow: 0 6px 20px rgba(232, 219, 128, 0.55); }
+  .hero-cta svg { transition: transform .3s var(--ease); }
+  .hero-cta:hover svg { transform: translateX(3px); }
+
+  /* Float animations for hero tiles */
+  @keyframes heroFloat0  { 0%,100%{transform:translate(0,0) rotate(-4deg)} 50%{transform:translate(18px,-22px) rotate(-2deg)} }
+  @keyframes heroFloat1  { 0%,100%{transform:translate(0,0) rotate(3deg)}  50%{transform:translate(-14px,20px) rotate(5deg)} }
+  @keyframes heroFloat2  { 0%,100%{transform:translate(0,0) rotate(-2deg)} 50%{transform:translate(20px,16px) rotate(0deg)} }
+  @keyframes heroFloat3  { 0%,100%{transform:translate(0,0) rotate(5deg)}  50%{transform:translate(-20px,-18px) rotate(3deg)} }
+  @keyframes heroFloat4  { 0%,100%{transform:translate(0,0) rotate(-6deg)} 50%{transform:translate(16px,12px) rotate(-4deg)} }
+  @keyframes heroFloat5  { 0%,100%{transform:translate(0,0) rotate(2deg)}  50%{transform:translate(-10px,-24px) rotate(4deg)} }
+  @keyframes heroFloat6  { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(22px,-12px) rotate(-1deg)} }
+  @keyframes heroFloat7  { 0%,100%{transform:translate(0,0) rotate(4deg)}  50%{transform:translate(-18px,18px) rotate(6deg)} }
+  @keyframes heroFloat8  { 0%,100%{transform:translate(0,0) rotate(-5deg)} 50%{transform:translate(12px,-20px) rotate(-3deg)} }
+  @keyframes heroFloat9  { 0%,100%{transform:translate(0,0) rotate(1deg)}  50%{transform:translate(-22px,10px) rotate(3deg)} }
+  @keyframes heroFloat10 { 0%,100%{transform:translate(0,0) rotate(-2deg)} 50%{transform:translate(18px,22px) rotate(0deg)} }
+  @keyframes heroFloat11 { 0%,100%{transform:translate(0,0) rotate(6deg)}  50%{transform:translate(-16px,-16px) rotate(4deg)} }
+  @keyframes heroFloat12 { 0%,100%{transform:translate(0,0) rotate(-4deg)} 50%{transform:translate(10px,18px) rotate(-2deg)} }
+  @keyframes heroFloat13 { 0%,100%{transform:translate(0,0) rotate(3deg)}  50%{transform:translate(-20px,-10px) rotate(5deg)} }
+  @keyframes heroFloat14 { 0%,100%{transform:translate(0,0) rotate(-1deg)} 50%{transform:translate(14px,-18px) rotate(1deg)} }
+  @keyframes heroFloat15 { 0%,100%{transform:translate(0,0) rotate(5deg)}  50%{transform:translate(-12px,20px) rotate(3deg)} }
+  @keyframes heroFloat16 { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(20px,8px) rotate(-1deg)} }
 
   /* ============ BUTTONS (bluefarm: dark, square, arrow) ============ */
   .btn-dark {
@@ -203,7 +198,7 @@
     font-size: 2.6rem; font-weight: 700;
     color: var(--dark);
     line-height: 1.2;
-    font-family: var(--font-en);
+    font-family: var(--font-display);
   }
   .number-item span {
     font-size: .82rem; color: var(--text-muted);
@@ -216,7 +211,7 @@
   .section-head { margin-bottom: 72px; }
   .section-head--center { text-align: center; }
   .section-en {
-    font-family: var(--font-en);
+    font-family: var(--font-display);
     font-size: clamp(.7rem, 1.2vw, .8rem);
     font-weight: 600;
     letter-spacing: .18em;
@@ -291,7 +286,7 @@
     gap: 8px;
     margin-top: 16px;
     padding: 14px 36px;
-    background: #e8c94a;
+    background: #E8DB80;
     color: var(--dark);
     font-size: .95rem;
     font-weight: 600;
@@ -316,6 +311,152 @@
     }
   }
 
+  /* ============ PROBLEM (PAS: problem callouts) ============ */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .problem-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 44px 36px;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .problem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0,0,0,.05);
+  }
+  .problem-num {
+    font-family: var(--font-display);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .problem-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    color: var(--dark);
+  }
+  .problem-card p {
+    font-size: .88rem;
+    line-height: 2;
+    color: var(--text-light);
+  }
+  @media (max-width: 768px) {
+    .problem-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ AGITATE (quiet emphasis block) ============ */
+  .agitate {
+    background: var(--bg-gray);
+    padding: 100px 0;
+  }
+  .agitate-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 40px;
+    text-align: center;
+  }
+  .agitate .section-en {
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  .agitate-title {
+    font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.9;
+    letter-spacing: .03em;
+    color: var(--dark);
+    margin-bottom: 36px;
+  }
+  .agitate-body p {
+    font-size: .95rem;
+    line-height: 2.2;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .agitate-body p:last-child { margin-bottom: 0; }
+
+  /* ============ AEO / GEO ============ */
+  .aeo-geo { padding: 120px 0; }
+  .aeo-geo-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 40px;
+  }
+  .aeo-geo-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 44px 40px;
+  }
+  .aeo-geo-label {
+    font-family: var(--font-display);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .aeo-geo-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    line-height: 1.7;
+    color: var(--dark);
+  }
+  .aeo-geo-card p {
+    font-size: .88rem;
+    line-height: 2;
+    color: var(--text-light);
+  }
+  .aeo-geo-measures {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 48px 48px;
+  }
+  .aeo-geo-measures h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--dark);
+    letter-spacing: .02em;
+  }
+  .aeo-geo-measures ul {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+  }
+  .aeo-geo-measures li {
+    font-size: .9rem;
+    line-height: 1.9;
+    color: var(--text);
+    padding-left: 24px;
+    position: relative;
+  }
+  .aeo-geo-measures li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85em;
+    width: 12px;
+    height: 2px;
+    background: var(--accent);
+  }
+  @media (max-width: 768px) {
+    .aeo-geo-cards { grid-template-columns: 1fr; }
+    .aeo-geo-measures { padding: 36px 28px; }
+  }
+
   /* ============ SERVICE (bluefarm: 3-col, minimal card) ============ */
   .service-grid {
     display: grid;
@@ -334,7 +475,7 @@
     box-shadow: 0 12px 36px rgba(0,0,0,.05);
   }
   .service-num {
-    font-family: var(--font-en);
+    font-family: var(--font-display);
     font-size: .7rem;
     font-weight: 600;
     letter-spacing: .12em;
@@ -437,7 +578,7 @@
     text-transform: uppercase;
     letter-spacing: .1em;
     margin-bottom: 6px;
-    font-family: var(--font-en);
+    font-family: var(--font-display);
   }
   .work-name {
     font-size: .95rem;
@@ -473,140 +614,6 @@
     .works-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
   }
 
-  /* ============ FOOTER (expanding panel — zeroten style) ============ */
-  .footer-wrapper {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    z-index: 8000;
-    clip-path: inset(calc(100% - 52px) calc(50% - 100px) 0px round 4px);
-    transition: clip-path 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-  }
-  .footer-wrapper.open,
-  .footer-wrapper.auto_open {
-    clip-path: inset(0px round 7px);
-  }
-
-  .footer-panel {
-    background: #E8DB80;
-    color: var(--text);
-    border-radius: 7px;
-    padding: 48px 40px 72px;
-    text-align: center;
-    position: relative;
-  }
-
-  .footer-logo {
-    font-size: 1.1rem; font-weight: 700;
-    color: var(--dark);
-    letter-spacing: .04em;
-    margin-bottom: 24px;
-  }
-  .footer-nav {
-    list-style: none;
-    display: flex; justify-content: center; flex-wrap: wrap; gap: 28px;
-    margin-bottom: 24px;
-  }
-  .footer-nav a {
-    font-size: .82rem; color: rgba(50,55,60,0.65);
-    transition: color .3s;
-  }
-  .footer-nav a:hover { color: var(--dark); }
-  .footer-address {
-    font-size: .78rem;
-    color: rgba(50,55,60,0.5);
-    margin-bottom: 20px;
-    font-style: normal;
-  }
-  .footer-copy {
-    font-size: .72rem;
-    color: rgba(50,55,60,0.5);
-    padding-top: 20px;
-    border-top: 1px solid rgba(50,55,60,0.15);
-  }
-
-  /* Centered toggle button at bottom — visible through clip-path when closed */
-  .footer-toggle {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    z-index: 2;
-  }
-  .footer-toggle-label {
-    font-family: var(--font-en);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--dark);
-    letter-spacing: 0.06em;
-  }
-  .footer-toggle-lines {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    width: 20px;
-    height: 20px;
-  }
-  .footer-toggle-lines span {
-    display: block;
-    width: 16px;
-    height: 2px;
-    background: var(--dark);
-    border-radius: 1px;
-    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
-  }
-  /* Change label & icon when open */
-  .footer-wrapper.open .footer-toggle-open,
-  .footer-wrapper.auto_open .footer-toggle-open { display: none; }
-  .footer-toggle-close { display: none; }
-  .footer-wrapper.open .footer-toggle-close,
-  .footer-wrapper.auto_open .footer-toggle-close { display: inline; }
-  .footer-wrapper.open .footer-toggle-lines span:nth-child(1),
-  .footer-wrapper.auto_open .footer-toggle-lines span:nth-child(1) {
-    transform: rotate(45deg) translate(2px, 2px);
-  }
-  .footer-wrapper.open .footer-toggle-lines span:nth-child(2),
-  .footer-wrapper.auto_open .footer-toggle-lines span:nth-child(2) {
-    transform: rotate(-45deg) translate(2px, -2px);
-  }
-
-  /* Backdrop overlay */
-  .footer-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(255,255,255,0.4);
-    backdrop-filter: blur(10px);
-    z-index: 7999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s cubic-bezier(0.33, 1, 0.68, 1);
-  }
-  .footer-backdrop.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .footer-spacer {
-    height: 300px;
-  }
-
-  /* ============ REVEAL ============ */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-  .reveal.visible { opacity: 1; transform: none; }
-
   /* ============ PALETTES ============ */
   .palette-1 { background: linear-gradient(135deg, #e8ddd3 0%, #d4c5b3 100%); }
   .palette-2 { background: linear-gradient(135deg, #c9d8e0 0%, #a8bcc8 100%); }
@@ -615,48 +622,8 @@
   .palette-5 { background: linear-gradient(135deg, #ddd8c9 0%, #c8c0a0 100%); }
   .palette-6 { background: linear-gradient(135deg, #d3dee8 0%, #b0c0d4 100%); }
 
-  /* ============ RESPONSIVE ============ */
-  /* ============ FLOATING CONTACT BUTTON (bottom-right) ============ */
-  .fab-contact {
-    position: fixed;
-    bottom: 32px;
-    right: 24px;
-    z-index: 8500;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 26px;
-    background: #E8DB80;
-    color: var(--dark) !important;
-    font-family: var(--font-en);
-    font-size: .82rem;
-    font-weight: 600;
-    letter-spacing: .08em;
-    border-radius: 100px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-    transition: transform .3s var(--ease), opacity .3s var(--ease), box-shadow .3s var(--ease);
-  }
-  .fab-contact:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
-    color: var(--dark) !important;
-  }
-  .fab-contact svg { transition: transform .3s var(--ease); }
-  .fab-contact:hover svg { transform: translateX(3px); }
-
-  /* 既存フッターパネル展開中は非表示 */
-  .footer-wrapper.open ~ .fab-contact,
-  .footer-wrapper.auto_open ~ .fab-contact {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-  }
-
+  /* ============ RESPONSIVE (page-specific) ============ */
   @media (max-width: 900px) {
-    .container { padding: 0 24px; }
-    .nav-inner { display: flex; justify-content: space-between; padding: 0 24px; }
-    .nav-links-left, .nav-links-right { display: none; }
-    .hamburger { display: block; }
     .hero { --hero-gap: 40px; }
     .section { padding: 80px 0; }
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -668,19 +635,6 @@
     .hero { --hero-gap: 24px; }
     .hero-actions { flex-direction: column; }
     .numbers-inner { grid-template-columns: 1fr; gap: 20px; }
-    .footer-nav { flex-direction: column; gap: 16px; }
-    .footer-panel { padding: 36px 24px 64px; }
-    .footer-spacer { height: 200px; }
-    .footer-wrapper {
-      clip-path: inset(calc(100% - 48px) calc(50% - 80px) 0px round 4px);
-    }
-    .footer-toggle { width: 160px; height: 48px; }
-    .fab-contact {
-      bottom: 76px;
-      right: 16px;
-      padding: 12px 20px;
-      font-size: .78rem;
-    }
   }
 </style>
 </head>
@@ -690,10 +644,10 @@
 <nav class="nav" id="nav" role="navigation" aria-label="メインナビゲーション">
   <div class="nav-inner">
     <ul class="nav-links-left">
-      <li><a href="#about">私たちについて</a></li>
-      <li><a href="#service">サービス内容</a></li>
+      <li><a href="about.html">私たちについて</a></li>
+      <li><a href="#solution">サービス内容</a></li>
     </ul>
-    <a href="#" class="nav-logo">PORTFOLIO</a>
+    <a href="#" class="nav-logo">Lin<span style="color:#E8DB80">Plan</span></a>
     <ul class="nav-links-right">
       <li><a href="#works">制作事例</a></li>
       <li><a href="contact.html" class="nav-contact-link">お問い合わせ
@@ -709,8 +663,8 @@
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="モバイルメニュー">
   <button class="mobile-menu-close" onclick="toggleMenu()" aria-label="メニューを閉じる">&times;</button>
   <ul>
-    <li><a href="#about" onclick="toggleMenu()">私たちについて</a></li>
-    <li><a href="#service" onclick="toggleMenu()">サービス内容</a></li>
+    <li><a href="about.html" onclick="toggleMenu()">私たちについて</a></li>
+    <li><a href="#solution" onclick="toggleMenu()">サービス内容</a></li>
     <li><a href="#works" onclick="toggleMenu()">制作事例</a></li>
     <li><a href="contact.html" onclick="toggleMenu()">お問い合わせ</a></li>
   </ul>
@@ -718,43 +672,118 @@
 
 <!-- ========== HERO ========== -->
 <section class="hero" id="top">
-  <video class="hero-video" src="mv_movie.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+  <div class="hero-frame" id="heroFrame" aria-hidden="true">
+    <!-- Floating tiles are injected by JS -->
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-logo">Lin<span>Plan</span></div>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">見つけられ、選ばれるサイトを。</p>
+    </div>
+  </div>
 </section>
 
 
-<!-- ========== ABOUT ========== -->
-<section class="section" id="about">
+<!-- ========== PROBLEM ========== -->
+<section class="section" id="problem">
   <div class="container">
-    <div class="about-grid">
-      <!-- 左側：縦書きテキスト＋鉛筆イラスト -->
-      <div class="about-visual reveal">
-        <!-- 右上の括弧 -->
-        <svg class="about-bracket" viewBox="0 0 60 80" fill="none" stroke="#555" stroke-width="2">
-          <path d="M5 75 Q5 5 55 5"/>
-        </svg>
-        <!-- 縦書きキャッチコピー -->
-        <div class="about-vertical-text">
-          枠を超える。<br>紡ぐ糸となる。
-        </div>
-        <!-- 鉛筆イラスト（仮SVG） -->
-        <svg class="about-pencil-img" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M80 60 Q40 30 20 50 Q10 58 15 65 Q20 72 35 60 Q55 42 80 60Z" stroke="#555" stroke-width="1.5" fill="none"/>
-          <rect x="85" y="30" width="60" height="14" rx="2" transform="rotate(-35 85 30)" fill="#4a90d9" stroke="#333" stroke-width="1"/>
-          <polygon points="82,55 78,65 88,60" fill="#f5d76e" stroke="#333" stroke-width="1"/>
-          <line x1="78" y1="65" x2="76" y2="68" stroke="#333" stroke-width="1"/>
-        </svg>
+    <div class="section-head section-head--center reveal">
+      <p class="section-en">Problem</p>
+      <h2 class="section-title">そのサイト、事業の武器になっていますか？</h2>
+      <p class="section-desc">新たに作る方も、すでにお持ちの方も。<br>多くのビジネスサイトが、次の3つのどこかでつまずいています。</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <p class="problem-num">PROBLEM 01</p>
+        <h3>見つけてもらえない</h3>
+        <p>Google検索はもちろん、ChatGPTなどのAI検索でも、あなたの事業が候補に挙がっていない。</p>
       </div>
+      <div class="problem-card reveal">
+        <p class="problem-num">PROBLEM 02</p>
+        <h3>強みが伝わらない</h3>
+        <p>見た目は整っていても、なぜ自分たちを選ぶべきかが言葉になっていない。</p>
+      </div>
+      <div class="problem-card reveal">
+        <p class="problem-num">PROBLEM 03</p>
+        <h3>成果につながらない</h3>
+        <p>アクセスはあるのに、問い合わせや売上に結びつかない。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <!-- 右側：テキストコンテンツ -->
-      <div class="about-text-block reveal">
-        <p>LinPlanの坪山です。<br>普段はシステムエンジニアとして働きながら、Web制作やアプリ開発を手がけています。</p>
-        <p>企業さまからのご依頼を受け、ホームページの企画・制作を行うほか、個人でもWebアプリやモバイルアプリの開発に取り組んでいます。<br>また、AIを活用した業務支援のご提案も行っています。</p>
-        <p>「システムで、毎日をもっと心地よく。」<br>そんな小さくても確かな変化を届けられるよう、日々つくり続けています。</p>
-        <a href="#" class="about-btn">
-          私たちについて
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-        </a>
+<!-- ========== AGITATE ========== -->
+<section class="agitate" id="agitate">
+  <div class="agitate-inner reveal">
+    <p class="section-en">Why it matters</p>
+    <h2 class="agitate-title">「あるだけのサイト」が、<br>静かに機会を失っている</h2>
+    <div class="agitate-body">
+      <p>検索結果の一番上は、もはや青いリンクではなくAIの回答です。そこに載らないということは、比較検討の土俵にすら立てないということ。</p>
+      <p>ブランドの魅力が整理されていないサイトは、訪問者に「で、何の会社だっけ」と思われた瞬間に離脱されます。</p>
+      <p>成果につながらないサイトは、毎月の運用費がそのまま損失になる——。</p>
+      <p>ひとつひとつは小さな綻びでも、積み重なれば事業の成長スピードを確実に削ります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SOLUTION ========== -->
+<section class="section" id="solution">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <p class="section-en">Solution</p>
+      <h2 class="section-title">見つけられ、伝わり、成果を生むサイトへ</h2>
+      <p class="section-desc">目的と課題に合わせて、必要なものだけを丁寧に。<br>3つのサービスでご支援します。</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card reveal">
+        <p class="service-num">SERVICE 01</p>
+        <h3>ホームページ制作</h3>
+        <p>コーポレート・店舗・サービスサイトを、検索／AI検索の両方に最適化した設計で。WordPress・レスポンシブ・公開後の運用まで一貫して対応します。</p>
       </div>
+      <div class="service-card reveal">
+        <p class="service-num">SERVICE 02</p>
+        <h3>アプリ制作</h3>
+        <p>iOS/Androidのモバイルアプリ、業務Webアプリを企画〜開発まで。使いやすいUI/UXと安定した動作で、現場の課題を解決します。</p>
+      </div>
+      <div class="service-card reveal">
+        <p class="service-num">SERVICE 03</p>
+        <h3>AIサービス</h3>
+        <p>ChatGPT・生成AIを活用した業務効率化、AIチャットボット導入支援。業務フローに合わせたワンストップのご提案を行います。</p>
+        <a href="ai-service.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:.85rem;font-weight:600;color:var(--accent);">詳しく見る <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== AEO / GEO ========== -->
+<section class="aeo-geo section-gray" id="aeo-geo">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <p class="section-en">AEO / GEO</p>
+      <h2 class="section-title">これからのサイトは<br>「AIに選ばれる」必要があります</h2>
+      <p class="section-desc">いま検索行動は、GoogleからChatGPT・Perplexity・Geminiといった<br>AIへと急速に移っています。従来のSEOだけでは、もう届きません。</p>
+    </div>
+    <div class="aeo-geo-cards">
+      <div class="aeo-geo-card reveal">
+        <p class="aeo-geo-label">AEO</p>
+        <h3>Answer Engine Optimization</h3>
+        <p>AIが質問に答えるとき、情報源として引用されるための最適化。構造化データ・明確な見出し階層・一問一答形式の設計が鍵になります。</p>
+      </div>
+      <div class="aeo-geo-card reveal">
+        <p class="aeo-geo-label">GEO</p>
+        <h3>Generative Engine Optimization</h3>
+        <p>生成AIの回答文そのものに、自社の名前が自然に登場するための最適化。ブランドの文脈化・信頼性シグナル・適切な言及構造が必要です。</p>
+      </div>
+    </div>
+    <div class="aeo-geo-measures reveal">
+      <h4>LinPlanの対応内容</h4>
+      <ul>
+        <li>schema.org による構造化データマークアップ</li>
+        <li>AIクローラーが読み取りやすい情報設計・見出し構造</li>
+        <li>FAQ・Q&amp;A形式での知識資産化</li>
+        <li>E-E-A-T（経験・専門性・権威性・信頼性）を高めるコンテンツ設計</li>
+        <li>ブランド言及の蓄積を促す導線設計</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -875,53 +904,23 @@
   </div>
 </section>
 
-<!-- ========== SERVICE ========== -->
-<section class="section section-gray" id="service">
-  <div class="container">
-    <div class="section-head section-head--center reveal">
-      <p class="section-en">Service</p>
-      <h2 class="section-title">ご提供できること</h2>
-      <p class="section-desc">お客様の課題や目的に合わせて、<br>最適なプランをご提案いたします。</p>
-    </div>
-
-    <div class="service-grid">
-      <div class="service-card reveal">
-        <p class="service-num">SERVICE 01</p>
-        <h3>ホームページ制作</h3>
-        <p>コーポレートサイト、店舗サイト、サービスサイトなど、お客様の目的やターゲットに合わせた最適なWEBサイトをご提案・制作します。デザインからコーディング、WordPress構築、レスポンシブ対応、SEO対策まで一貫して対応。公開後の運用サポートもお任せください。</p>
-      </div>
-      <div class="service-card reveal">
-        <p class="service-num">SERVICE 02</p>
-        <h3>アプリ制作</h3>
-        <p>iOS・Android対応のモバイルアプリや、業務効率化のためのWEBアプリケーションを企画・設計・開発します。使いやすさを重視したUI/UXデザインと、安定した動作を実現する技術力で、ビジネスの課題を解決するアプリをお届けします。</p>
-      </div>
-      <div class="service-card reveal">
-        <p class="service-num">SERVICE 03</p>
-        <h3>AIサービス</h3>
-        <p>ChatGPTや生成AIを活用した業務効率化ツールやAIチャットボットの導入支援を行います。お客様の業務フローに合わせたAIソリューションのご提案から構築・運用まで、ワンストップでサポートいたします。</p>
-        <a href="ai-service.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:.85rem;font-weight:600;color:var(--accent);">詳しく見る <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ========== FOOTER ========== -->
 <div class="footer-spacer"></div>
 <div class="footer-backdrop" id="footerBackdrop"></div>
 <footer class="footer-wrapper" id="footerWrapper" role="contentinfo">
   <div class="footer-panel">
-    <p class="footer-logo">PORTFOLIO</p>
+    <p class="footer-logo">Lin<span style="color:#c8a800">Plan</span></p>
     <ul class="footer-nav">
-      <li><a href="#about">私たちについて</a></li>
-      <li><a href="#service">サービス内容</a></li>
+      <li><a href="about.html">私たちについて</a></li>
+      <li><a href="#solution">サービス内容</a></li>
       <li><a href="#works">制作事例</a></li>
       <li><a href="contact.html">お問い合わせ</a></li>
     </ul>
     <address class="footer-address">東京都渋谷区 | your-email@example.com</address>
-    <p class="footer-copy">&copy; 2026 PORTFOLIO. All Rights Reserved.</p>
+    <p class="footer-copy">&copy; 2026 LinPlan. All Rights Reserved.</p>
     <button class="footer-toggle" id="footerToggle" aria-label="フッターを開閉">
       <span class="footer-toggle-label">
-        <span class="footer-toggle-open">Linplan</span>
+        <span class="footer-toggle-open">LinPlan</span>
         <span class="footer-toggle-close">CLOSE</span>
       </span>
       <span class="footer-toggle-lines">
@@ -938,81 +937,91 @@
 </a>
 
 <script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  function toggleMenu() {
-    const menu = document.getElementById('mobileMenu');
-    const hamburger = document.getElementById('hamburger');
-    const isOpen = menu.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', isOpen);
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // ========== FOOTER EXPANDING PANEL ==========
+  // ========== HERO FLOATING TILES ==========
   (() => {
-    const wrapper = document.getElementById('footerWrapper');
-    const toggle = document.getElementById('footerToggle');
-    const backdrop = document.getElementById('footerBackdrop');
-    let isManualOpen = false;
-    let lastScrollY = window.scrollY;
+    const frame = document.getElementById('heroFrame');
+    if (!frame) return;
 
-    function openFooter(manual) {
-      wrapper.classList.remove('auto_open');
-      if (manual) {
-        wrapper.classList.add('open');
-        backdrop.classList.add('active');
-        isManualOpen = true;
-      } else {
-        wrapper.classList.add('auto_open');
-      }
-    }
+    // [left%, top%, size, bgColor, duration(s), delay(s), icon]
+    const tiles = [
+      [3,  5,  90, '#5BA4CF', 6.2, 0.0, 'web'],
+      [13, 60, 72, '#E8DB80', 7.8, 1.2, 'save'],
+      [22, 15, 80, '#E8543A', 5.9, 0.5, 'wifi'],
+      [2,  38, 68, '#3BA297', 8.1, 2.0, 'lock'],
+      [35, 5,  76, '#F5A623', 7.0, 0.8, 'plugin'],
+      [48, 70, 82, '#5BA4CF', 6.5, 1.5, 'printer'],
+      [58, 8,  100,'#E8543A', 9.0, 0.3, 'folder'],
+      [72, 55, 74, '#2C5364', 7.3, 2.5, 'settings'],
+      [82, 10, 80, '#3BA297', 6.8, 1.0, 'monitor'],
+      [88, 38, 70, '#E8DB80', 8.4, 0.7, 'server'],
+      [6,  80, 74, '#B0B8C1', 7.6, 1.8, 'trash'],
+      [25, 72, 68, '#5BA4CF', 6.3, 0.4, 'camera'],
+      [19, 40, 78, '#F5A623', 8.7, 2.2, 'game'],
+      [62, 72, 72, '#E8543A', 7.1, 1.6, 'globe'],
+      [76, 78, 80, '#3BA297', 6.6, 0.9, 'usb'],
+      [90, 68, 70, '#2C5364', 8.2, 2.8, 'cpu'],
+      [35, 52, 68, '#B0B8C1', 7.4, 0.6, 'battery'],
+    ];
 
-    function closeFooter() {
-      wrapper.classList.remove('open', 'auto_open');
-      backdrop.classList.remove('active');
-      isManualOpen = false;
-    }
+    const icons = {
+      web: '<rect x="4" y="8" width="32" height="24" rx="2" fill="#fff" fill-opacity=".25"/><rect x="4" y="8" width="32" height="6" rx="2" fill="#fff" fill-opacity=".5"/><circle cx="8" cy="11" r="1.5" fill="#fff"/><circle cx="12" cy="11" r="1.5" fill="#fff"/><rect x="8" y="18" width="14" height="2" rx="1" fill="#fff" fill-opacity=".7"/><rect x="8" y="22" width="20" height="2" rx="1" fill="#fff" fill-opacity=".5"/><rect x="8" y="26" width="10" height="2" rx="1" fill="#fff" fill-opacity=".4"/>',
+      save: '<rect x="8" y="6" width="24" height="28" rx="2" fill="#fff" fill-opacity=".3"/><rect x="12" y="6" width="14" height="10" rx="1" fill="#fff" fill-opacity=".5"/><rect x="10" y="22" width="20" height="10" rx="1" fill="#fff" fill-opacity=".4"/><rect x="14" y="24" width="12" height="6" rx="1" fill="#fff" fill-opacity=".3"/>',
+      wifi: '<path d="M8 18 Q20 8 32 18" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/><path d="M12 23 Q20 15 28 23" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".75"/><path d="M16 28 Q20 22 24 28" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="32" r="2.5" fill="#fff"/>',
+      lock: '<rect x="10" y="18" width="20" height="16" rx="3" fill="#fff" fill-opacity=".35"/><path d="M14 18v-5a6 6 0 0112 0v5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="26" r="3" fill="#fff" fill-opacity=".7"/><rect x="19" y="26" width="2" height="5" rx="1" fill="#fff" fill-opacity=".7"/>',
+      plugin: '<rect x="14" y="6" width="4" height="14" rx="2" fill="#fff" fill-opacity=".7"/><rect x="22" y="6" width="4" height="14" rx="2" fill="#fff" fill-opacity=".7"/><path d="M10 20h20v6a8 8 0 01-16 0v-6" fill="#fff" fill-opacity=".35"/><rect x="17" y="32" width="6" height="4" rx="1" fill="#fff" fill-opacity=".5"/>',
+      printer: '<rect x="8" y="14" width="24" height="16" rx="2" fill="#fff" fill-opacity=".3"/><rect x="11" y="8" width="18" height="8" rx="1" fill="#fff" fill-opacity=".5"/><rect x="11" y="26" width="18" height="10" rx="1" fill="#fff" fill-opacity=".4"/><rect x="14" y="29" width="12" height="2" rx="1" fill="#fff" fill-opacity=".6"/><rect x="14" y="33" width="8" height="2" rx="1" fill="#fff" fill-opacity=".6"/><circle cx="29" cy="20" r="2" fill="#fff" fill-opacity=".7"/>',
+      folder: '<path d="M4 14a3 3 0 013-3h10l4 4h12a3 3 0 013 3v12a3 3 0 01-3 3H7a3 3 0 01-3-3V14z" fill="#fff" fill-opacity=".35"/><path d="M4 14a3 3 0 013-3h10l4 4H4z" fill="#fff" fill-opacity=".25"/>',
+      settings: '<circle cx="20" cy="20" r="5" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M20 8v4M20 28v4M8 20h4M28 20h4M11.5 11.5l2.8 2.8M25.7 25.7l2.8 2.8M11.5 28.5l2.8-2.8M25.7 14.3l2.8-2.8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>',
+      monitor: '<rect x="5" y="8" width="30" height="20" rx="2" fill="#fff" fill-opacity=".3"/><rect x="5" y="8" width="30" height="5" rx="2" fill="#fff" fill-opacity=".2"/><rect x="8" y="11" width="8" height="5" rx="1" fill="#fff" fill-opacity=".5"/><rect x="18" y="11" width="14" height="2" rx="1" fill="#fff" fill-opacity=".5"/><rect x="18" y="15" width="10" height="2" rx="1" fill="#fff" fill-opacity=".4"/><rect x="16" y="28" width="8" height="4" rx="1" fill="#fff" fill-opacity=".4"/><rect x="12" y="32" width="16" height="2" rx="1" fill="#fff" fill-opacity=".4"/>',
+      server: '<rect x="8" y="6" width="24" height="8" rx="2" fill="#fff" fill-opacity=".5"/><rect x="8" y="16" width="24" height="8" rx="2" fill="#fff" fill-opacity=".4"/><rect x="8" y="26" width="24" height="8" rx="2" fill="#fff" fill-opacity=".3"/><circle cx="28" cy="10" r="2" fill="#fff" fill-opacity=".8"/><circle cx="28" cy="20" r="2" fill="#fff" fill-opacity=".8"/><circle cx="28" cy="30" r="2" fill="#fff" fill-opacity=".8"/>',
+      trash: '<rect x="10" y="12" width="20" height="22" rx="2" fill="#fff" fill-opacity=".35"/><rect x="7" y="10" width="26" height="4" rx="2" fill="#fff" fill-opacity=".5"/><rect x="15" y="6" width="10" height="4" rx="2" fill="#fff" fill-opacity=".6"/><line x1="16" y1="17" x2="16" y2="30" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6"/><line x1="20" y1="17" x2="20" y2="30" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6"/><line x1="24" y1="17" x2="24" y2="30" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6"/>',
+      camera: '<rect x="5" y="13" width="22" height="16" rx="3" fill="#fff" fill-opacity=".35"/><path d="M27 17l8-4v14l-8-4V17z" fill="#fff" fill-opacity=".5"/><circle cx="16" cy="21" r="4" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>',
+      game: '<rect x="6" y="13" width="28" height="16" rx="8" fill="#fff" fill-opacity=".3"/><line x1="13" y1="21" x2="19" y2="21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/><line x1="16" y1="18" x2="16" y2="24" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/><circle cx="27" cy="19" r="2" fill="#fff" fill-opacity=".7"/><circle cx="27" cy="23" r="2" fill="#fff" fill-opacity=".7"/>',
+      globe: '<circle cx="20" cy="20" r="13" stroke="#fff" stroke-width="2" fill="none" opacity=".5"/><ellipse cx="20" cy="20" rx="6" ry="13" stroke="#fff" stroke-width="2" fill="none" opacity=".5"/><line x1="7" y1="20" x2="33" y2="20" stroke="#fff" stroke-width="2" opacity=".5"/><line x1="9" y1="14" x2="31" y2="14" stroke="#fff" stroke-width="1.5" opacity=".4"/><line x1="9" y1="26" x2="31" y2="26" stroke="#fff" stroke-width="1.5" opacity=".4"/>',
+      usb: '<rect x="14" y="6" width="12" height="20" rx="3" fill="#fff" fill-opacity=".35"/><rect x="10" y="26" width="20" height="8" rx="2" fill="#fff" fill-opacity=".5"/><rect x="17" y="34" width="6" height="4" rx="1" fill="#fff" fill-opacity=".6"/><rect x="16" y="10" width="4" height="6" rx="1" fill="#fff" fill-opacity=".5"/><rect x="22" y="10" width="2" height="4" rx="1" fill="#fff" fill-opacity=".5"/>',
+      cpu: '<rect x="10" y="10" width="20" height="20" rx="2" fill="#fff" fill-opacity=".35"/><rect x="14" y="14" width="12" height="12" rx="1" fill="#fff" fill-opacity=".4"/><line x1="14" y1="7" x2="14" y2="10" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="20" y1="7" x2="20" y2="10" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="26" y1="7" x2="26" y2="10" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="14" y1="30" x2="14" y2="33" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="20" y1="30" x2="20" y2="33" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="26" y1="30" x2="26" y2="33" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="7" y1="14" x2="10" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="7" y1="20" x2="10" y2="20" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="7" y1="26" x2="10" y2="26" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="30" y1="14" x2="33" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="30" y1="20" x2="33" y2="20" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><line x1="30" y1="26" x2="33" y2="26" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/>',
+      battery: '<rect x="8" y="13" width="24" height="14" rx="2" fill="#fff" fill-opacity=".35"/><rect x="32" y="17" width="4" height="6" rx="1" fill="#fff" fill-opacity=".5"/><rect x="11" y="16" width="8" height="8" rx="1" fill="#fff" fill-opacity=".7"/><path d="M22 16l-4 5h5l-4 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".8"/>',
+    };
 
-    // Toggle button click (CONTACT / CLOSE)
-    toggle.addEventListener('click', () => {
-      if (wrapper.classList.contains('open') || wrapper.classList.contains('auto_open')) {
-        closeFooter();
-      } else {
-        openFooter(true);
-      }
+    const overlay = frame.querySelector('.hero-overlay');
+    const fragment = document.createDocumentFragment();
+    const tileEls = [];
+
+    tiles.forEach((t, i) => {
+      const [l, top, , bg, dur, delay, icon] = t;
+      const tile = document.createElement('div');
+      tile.className = 'hero-tile';
+      tile.style.left = l + '%';
+      tile.style.top = top + '%';
+      tile.style.background = bg;
+      tile.style.animation = `heroFloat${i} ${dur}s ease-in-out ${delay}s infinite`;
+      tile.innerHTML = `<svg viewBox="0 0 40 40" fill="none">${icons[icon] || ''}</svg>`;
+      fragment.appendChild(tile);
+      tileEls.push(tile);
     });
 
-    // Click backdrop to close
-    backdrop.addEventListener('click', closeFooter);
+    frame.insertBefore(fragment, overlay);
 
-    // Scroll-based auto open/close
-    window.addEventListener('scroll', () => {
-      if (isManualOpen) return;
-
-      const scrollY = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = scrollY / maxScroll;
-
-      if (scrollPercent > 0.8 && scrollY > lastScrollY) {
-        if (!wrapper.classList.contains('auto_open')) openFooter(false);
-      }
-      if (scrollY < lastScrollY && wrapper.classList.contains('auto_open')) {
-        wrapper.classList.remove('auto_open');
-      }
-
-      lastScrollY = scrollY;
-    }, { passive: true });
+    // 画面サイズに応じてタイルサイズをスケーリング
+    const applyTileScale = () => {
+      const scale = Math.max(0.45, Math.min(1.25, window.innerWidth / 1400));
+      tileEls.forEach((tile, i) => {
+        const sz = tiles[i][2] * scale;
+        tile.style.width = sz + 'px';
+        tile.style.height = sz + 'px';
+        const iconSize = Math.round(sz * 0.48);
+        const svg = tile.querySelector('svg');
+        if (svg) {
+          svg.setAttribute('width', iconSize);
+          svg.setAttribute('height', iconSize);
+        }
+      });
+    };
+    applyTileScale();
+    window.addEventListener('resize', applyTileScale, { passive: true });
   })();
 </script>
+<script src="js/common.js"></script>
 
 </body>
 </html>
