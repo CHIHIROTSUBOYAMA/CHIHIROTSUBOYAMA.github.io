@@ -24,8 +24,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Klee+One:wght@400;600&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Klee+One:wght@400;600&family=Caveat:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/common.css">
+
+<!-- アニメーション用ライブラリ (Problem / Agitate セクション) -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
 
 <script type="application/ld+json">
 {
@@ -158,7 +163,7 @@
   @keyframes heroFloat15 { 0%,100%{transform:translate(0,0) rotate(5deg)}  50%{transform:translate(-12px,20px) rotate(3deg)} }
   @keyframes heroFloat16 { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(20px,8px) rotate(-1deg)} }
 
-  /* ============ BUTTONS (bluefarm: dark, square, arrow) ============ */
+  /* ============ BUTTONS ============ */
   .btn-dark {
     display: inline-flex; align-items: center; gap: 12px;
     padding: 16px 36px;
@@ -183,29 +188,7 @@
   }
   .btn-outline:hover { border-color: var(--text); }
 
-  /* ============ NUMBERS ============ */
-  .numbers {
-    padding: 56px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-  .numbers-inner {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    text-align: center; gap: 20px;
-  }
-  .number-item strong {
-    display: block;
-    font-size: 2.6rem; font-weight: 700;
-    color: var(--dark);
-    line-height: 1.2;
-    font-family: var(--font-display);
-  }
-  .number-item span {
-    font-size: .82rem; color: var(--text-muted);
-    margin-top: 6px; display: block;
-  }
-
-  /* ============ SECTION COMMON (bluefarm: large en label) ============ */
+  /* ============ SECTION COMMON ============ */
   .section { padding: 120px 0; }
   .section-gray { background: var(--bg-gray); }
   .section-head { margin-bottom: 72px; }
@@ -234,274 +217,439 @@
   }
   .section-head--center .section-desc { margin-left: auto; margin-right: auto; }
 
-  /* ============ ABOUT (bluefarm style) ============ */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-  .about-visual {
+  /* ============ PROBLEM ============ */
+  #problem {
     position: relative;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    min-height: 420px;
+    overflow: hidden;
   }
-  .about-vertical-text {
-    writing-mode: vertical-rl;
-    font-size: 2.4rem;
+  /* ノイズグレイン (SVG feTurbulence) */
+  #problem::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+  #problem > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .problem-stack {
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .problem-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 72px 1fr 240px;
+    gap: 40px;
+    align-items: center;
+    padding: 56px 0;
+    border-top: 1px solid var(--border);
+    isolation: isolate;
+  }
+  .problem-item:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* スタック→スライド用 (デスクトップのみ) */
+  @media (min-width: 901px) {
+    .problem-stack.is-stacked {
+      /* JS が height を測定して付与 */
+    }
+    .problem-stack.is-stacked .problem-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 48px 40px;
+      will-change: transform, opacity;
+    }
+    .problem-stack.is-stacked .problem-item__line { display: none; }
+  }
+
+  .problem-item__line {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.4s var(--ease);
+    z-index: 2;
+  }
+  .problem-item.is-inview .problem-item__line {
+    transform: scaleX(1);
+  }
+
+  .problem-item__num {
+    position: relative;
+    font-family: var(--font-display);
     font-weight: 700;
-    line-height: 1.8;
-    letter-spacing: .12em;
-    color: var(--dark);
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    user-select: none;
+    z-index: 2;
+    padding-top: 4px;
   }
-  .about-pencil-img {
-    position: absolute;
-    bottom: 20px;
-    left: 60px;
-    width: 160px;
-    height: auto;
+  .problem-item__num span {
+    display: inline-block;
+    color: var(--accent);
+    opacity: 0.22;
+    transition: opacity 0.9s var(--ease);
   }
-  .about-bracket {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 60px;
-    height: 80px;
+  .problem-item.is-inview .problem-item__num span {
+    opacity: 1;
   }
-  .about-text-block {}
-  .about-text-block p {
-    font-size: .95rem;
-    line-height: 2.2;
-    color: var(--text);
-    margin-bottom: 24px;
+
+  .problem-item__body {
+    position: relative;
+    z-index: 2;
   }
-  .about-text-block p:first-child {
-    font-weight: 500;
-  }
-  .about-btn {
+  .problem-item__label {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 14px 36px;
-    background: #E8DB80;
-    color: var(--dark);
-    font-size: .95rem;
-    font-weight: 600;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: opacity .3s;
-  }
-  .about-btn:hover { opacity: .8; }
-  .about-btn svg { transition: transform .3s; }
-  .about-btn:hover svg { transform: translateX(4px); }
-  @media (max-width: 768px) {
-    .about-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-    .about-visual {
-      min-height: 320px;
-      justify-content: center;
-    }
-    .about-vertical-text {
-      font-size: 1.8rem;
-    }
-  }
-
-  /* ============ PROBLEM (PAS: problem callouts) ============ */
-  .problem-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-  .problem-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 44px 36px;
-    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
-  }
-  .problem-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(0,0,0,.05);
-  }
-  .problem-num {
     font-family: var(--font-display);
-    font-size: .72rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: .14em;
+    letter-spacing: 0.24em;
     color: var(--accent);
-    margin-bottom: 18px;
-  }
-  .problem-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.7;
-    margin-bottom: 14px;
-    color: var(--dark);
-  }
-  .problem-card p {
-    font-size: .88rem;
-    line-height: 2;
-    color: var(--text-light);
-  }
-  @media (max-width: 768px) {
-    .problem-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ============ AGITATE (quiet emphasis block) ============ */
-  .agitate {
-    background: var(--bg-gray);
-    padding: 100px 0;
-  }
-  .agitate-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 40px;
-    text-align: center;
-  }
-  .agitate .section-en {
-    color: var(--text-muted);
-    margin-bottom: 18px;
-  }
-  .agitate-title {
-    font-size: clamp(1.3rem, 2.4vw, 1.75rem);
-    font-weight: 700;
-    line-height: 1.9;
-    letter-spacing: .03em;
-    color: var(--dark);
-    margin-bottom: 36px;
-  }
-  .agitate-body p {
-    font-size: .95rem;
-    line-height: 2.2;
-    color: var(--text);
-    margin-bottom: 14px;
-  }
-  .agitate-body p:last-child { margin-bottom: 0; }
-
-  /* ============ AEO / GEO ============ */
-  .aeo-geo { padding: 120px 0; }
-  .aeo-geo-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 40px;
-  }
-  .aeo-geo-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 4px;
-    padding: 44px 40px;
-  }
-  .aeo-geo-label {
-    font-family: var(--font-display);
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: .14em;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-  .aeo-geo-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 18px;
-    line-height: 1.7;
-    color: var(--dark);
-  }
-  .aeo-geo-card p {
-    font-size: .88rem;
-    line-height: 2;
-    color: var(--text-light);
-  }
-  .aeo-geo-measures {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 48px 48px;
-  }
-  .aeo-geo-measures h4 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 24px;
-    color: var(--dark);
-    letter-spacing: .02em;
-  }
-  .aeo-geo-measures ul {
-    list-style: none;
-    display: grid;
-    gap: 14px;
-  }
-  .aeo-geo-measures li {
-    font-size: .9rem;
-    line-height: 1.9;
-    color: var(--text);
-    padding-left: 24px;
+    margin-bottom: 22px;
+    padding-left: 48px;
     position: relative;
   }
-  .aeo-geo-measures li::before {
+  .problem-item__label::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.85em;
-    width: 12px;
-    height: 2px;
+    top: 50%;
+    width: 36px;
+    height: 1px;
     background: var(--accent);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1.1s var(--ease) 0.25s;
   }
-  @media (max-width: 768px) {
-    .aeo-geo-cards { grid-template-columns: 1fr; }
-    .aeo-geo-measures { padding: 36px 28px; }
+  .problem-item.is-inview .problem-item__label::before {
+    transform: scaleX(1);
   }
 
-  /* ============ SERVICE (bluefarm: 3-col, minimal card) ============ */
-  .service-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-  .service-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 48px 40px;
-    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
-  }
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(0,0,0,.05);
-  }
-  .service-num {
-    font-family: var(--font-display);
-    font-size: .7rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .service-card h3 {
-    font-size: 1.15rem;
+  .problem-item__title {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
     font-weight: 700;
-    margin-bottom: 16px;
     line-height: 1.6;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+    color: var(--dark);
+    overflow: hidden;
+    padding: 0 4px 6px 0;
   }
-  .service-card p {
-    font-size: .88rem;
+  .problem-item__title .char {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .problem-item__desc {
+    font-size: 0.92rem;
+    line-height: 2.1;
+    color: var(--text-light);
+    max-width: 520px;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 1.1s var(--ease) 0.55s, transform 1.1s var(--ease) 0.55s;
+  }
+  .problem-item.is-inview .problem-item__desc {
+    opacity: 1;
+    transform: none;
+  }
+
+  .problem-item__illust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .problem-item__illust svg {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #e6f4f2;
+    overflow: visible;
+  }
+
+  @media (max-width: 900px) {
+    .problem-item {
+      grid-template-columns: 48px 1fr;
+      gap: 24px;
+      padding: 48px 0;
+    }
+    .problem-item__num {
+      font-size: 1.8rem;
+    }
+    .problem-item__illust {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .problem-item__num span {
+      transition: none;
+      color: var(--accent);
+      opacity: 1;
+    }
+    .problem-item__title .char { opacity: 1; transform: none; }
+    .problem-item__desc { opacity: 1; transform: none; transition: none; }
+    .problem-item__line { transform: scaleX(1); transition: none; }
+    .problem-item__label::before { transform: scaleX(1); transition: none; }
+  }
+
+  /* ============ AGITATE (scroll-pinned card stack) ============ */
+  .agitate {
+    background: var(--bg-gray);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 0;
+  }
+  .agitate-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 100%;
+  }
+  .agitate .section-en {
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+  }
+  .agitate-title {
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    margin-bottom: 56px;
+    color: var(--dark);
+    text-align: center;
+  }
+
+  .agitate-flow {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .agitate-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+    will-change: transform;
+  }
+  .agitate-card__icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    background: #f0f7f6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .agitate-card__num {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .agitate-card__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .agitate-card__desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text-light);
+  }
+  .agitate-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    opacity: 0;
+  }
+
+  .agitate-conclusion {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .agitate-conclusion__icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: rgba(59,162,151,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .agitate-conclusion__text {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.75);
+  }
+  .agitate-conclusion__text strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .agitate-flow {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .agitate-arrow { opacity: 1; transform: rotate(90deg); }
+    .agitate-conclusion { flex-direction: column; padding: 28px 24px; opacity: 1; transform: none; }
+    .agitate-card { transform: none !important; }
+  }
+
+  .agitate-anim-label { opacity: 0; transform: translateY(20px); }
+  .agitate-anim-title { opacity: 0; transform: translateY(20px); }
+
+  /* ============ AEO / GEO (illustrated) ============ */
+  .aeo-geo { padding: 120px 0; }
+
+  .aeo-geo-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .aeo-geo-row--reverse { direction: rtl; }
+  .aeo-geo-row--reverse > * { direction: ltr; }
+
+  .aeo-geo-illust {
+    background: #f0f7f6;
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .aeo-geo-illust svg { width: 100%; max-width: 320px; height: auto; }
+
+  .aeo-geo-tag {
+    display: inline-flex;
+    align-items: center;
+    background: #e6f4f2;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .aeo-geo-text h3 {
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .aeo-geo-text p {
+    font-size: 0.95rem;
     line-height: 2;
     color: var(--text-light);
   }
 
-  /* ============ WORKS (monitor style) ============ */
-  .works-grid {
+  @media (max-width: 860px) {
+    .aeo-geo-row { grid-template-columns: 1fr; gap: 32px; }
+    .aeo-geo-row--reverse { direction: ltr; }
+  }
+
+  /* ============ SERVICE + WORKS 統合 ============ */
+  .service-group {
+    border-top: 1px solid var(--border);
+    padding: 64px 0;
+  }
+  .service-group:last-child { border-bottom: 1px solid var(--border); }
+  .service-group__head {
+    margin-bottom: 48px;
+    text-align: left;
+  }
+  .service-group__title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .service-group__desc {
+    font-size: 0.9rem;
+    line-height: 2;
+    color: var(--text-light);
+    max-width: 480px;
+  }
+  .service-group__works {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 36px 28px;
+    gap: 28px;
   }
+  .service-group__works-2col {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 720px;
+  }
+  .service-group__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 14px 28px;
+    background: var(--dark);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: opacity 0.3s;
+  }
+  .service-group__cta:hover { opacity: 0.8; }
+  @media (max-width: 900px) {
+    .service-group__works, .service-group__works-2col { grid-template-columns: 1fr; max-width: 100%; }
+  }
+
+  /* ============ WORKS (monitor style) ============ */
   .work-card {
     cursor: pointer;
     transition: transform .5s var(--ease);
@@ -510,7 +658,6 @@
     transform: translateY(-4px);
   }
 
-  /* --- Monitor Frame --- */
   .monitor {
     position: relative;
     background: #1a1a1a;
@@ -526,23 +673,11 @@
     background: #fff;
     border-radius: 4px 4px 0 0;
   }
-  .monitor-screen::-webkit-scrollbar {
-    width: 5px;
-  }
-  .monitor-screen::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  .monitor-screen::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 3px;
-  }
-  .monitor-screen::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-  }
-  .monitor-screen img {
-    width: 100%;
-    display: block;
-  }
+  .monitor-screen::-webkit-scrollbar { width: 5px; }
+  .monitor-screen::-webkit-scrollbar-track { background: #f1f1f1; }
+  .monitor-screen::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  .monitor-screen::-webkit-scrollbar-thumb:hover { background: #aaa; }
+  .monitor-screen img { width: 100%; display: block; }
   .monitor-chin {
     height: 22px;
     display: flex;
@@ -570,7 +705,6 @@
     border-radius: 0 0 4px 4px;
   }
 
-  /* --- Work Info (below monitor) --- */
   .work-info { padding: 18px 4px 0; }
   .work-category {
     font-size: .68rem; font-weight: 600;
@@ -594,51 +728,186 @@
     padding: 4px 10px;
     border-radius: 3px;
   }
-  .works-more {
-    text-align: center;
-    margin-top: 52px;
-  }
-  .works-more a {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 36px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: .88rem; font-weight: 500;
-    color: var(--text);
-    transition: all .3s;
-  }
-  .works-more a:hover { border-color: var(--dark); background: var(--dark); color: #fff; }
-  .works-more a svg { transition: transform .3s; }
-  .works-more a:hover svg { transform: translateX(4px); }
-  @media (max-width: 768px) {
-    .works-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-  }
-
-  /* ============ PALETTES ============ */
-  .palette-1 { background: linear-gradient(135deg, #e8ddd3 0%, #d4c5b3 100%); }
-  .palette-2 { background: linear-gradient(135deg, #c9d8e0 0%, #a8bcc8 100%); }
-  .palette-3 { background: linear-gradient(135deg, #d5ddd3 0%, #b8c8b0 100%); }
-  .palette-4 { background: linear-gradient(135deg, #e0d5d8 0%, #c8b0b8 100%); }
-  .palette-5 { background: linear-gradient(135deg, #ddd8c9 0%, #c8c0a0 100%); }
-  .palette-6 { background: linear-gradient(135deg, #d3dee8 0%, #b0c0d4 100%); }
 
   /* ============ RESPONSIVE (page-specific) ============ */
   @media (max-width: 900px) {
     .hero { --hero-gap: 40px; }
     .section { padding: 80px 0; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .about-visual { max-height: 300px; }
-    .service-grid { grid-template-columns: 1fr; }
-    .works-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
     .hero { --hero-gap: 24px; }
     .hero-actions { flex-direction: column; }
-    .numbers-inner { grid-template-columns: 1fr; gap: 20px; }
   }
+
+  /* ============ SECTION FONT (Problem 以下は Zen Maru Gothic に統一) ============ */
+  #problem,
+  .agitate,
+  #solution,
+  #aeo-geo {
+    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+  }
+
 </style>
 </head>
 <body>
+
+<!-- ========== LOADING SCREEN ========== -->
+<div id="lp-loader">
+  <div id="lp-loader-inner">
+    <!-- レモン（左半分） -->
+    <div class="lp-lemon-half lp-lemon-left">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <clipPath id="leftClip"><rect x="0" y="0" width="60" height="120"/></clipPath>
+        <g clip-path="url(#leftClip)">
+          <ellipse cx="60" cy="65" rx="52" ry="46" fill="#F5E642"/>
+          <ellipse cx="60" cy="65" rx="44" ry="38" fill="#F7ED6A"/>
+          <path d="M60 27 L60 103" stroke="#F0D800" stroke-width="1.5" opacity="0.4"/>
+          <path d="M20 45 Q60 55 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <path d="M16 75 Q40 72 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <ellipse cx="60" cy="18" rx="8" ry="9" fill="#F5E642"/>
+          <ellipse cx="60" cy="112" rx="6" ry="7" fill="#F5E642"/>
+        </g>
+        <path d="M60 0 L55 20 L62 35 L54 55 L63 75 L54 95 L60 120" stroke="#e8c800" stroke-width="2" fill="none" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <!-- レモン（右半分） -->
+    <div class="lp-lemon-half lp-lemon-right">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <clipPath id="rightClip"><rect x="60" y="0" width="60" height="120"/></clipPath>
+        <g clip-path="url(#rightClip)">
+          <ellipse cx="60" cy="65" rx="52" ry="46" fill="#F5E642"/>
+          <ellipse cx="60" cy="65" rx="44" ry="38" fill="#F7ED6A"/>
+          <path d="M60 27 L60 103" stroke="#F0D800" stroke-width="1.5" opacity="0.4"/>
+          <path d="M100 45 Q60 55 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <path d="M104 75 Q80 72 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <ellipse cx="60" cy="18" rx="8" ry="9" fill="#F5E642"/>
+          <ellipse cx="60" cy="112" rx="6" ry="7" fill="#F5E642"/>
+        </g>
+        <path d="M60 0 L65 20 L58 35 L66 55 L57 75 L66 95 L60 120" stroke="#e8c800" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <path d="M68 12 Q88 -2 96 10 Q80 22 68 12Z" fill="#5AB552"/>
+        <path d="M68 12 Q85 8 96 10" stroke="#3a8c34" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- ロゴ（レモンの中から出てくる） -->
+    <div id="lp-loader-logo">
+      <svg class="lp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 52" role="img" aria-label="LinPlan">
+        <g class="lp-lin" fill="currentColor" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path fill="none" d="M3.5 8V48H24.5"/>
+          <path fill="none" d="M37 20V48"/>
+          <path fill="none" d="M49.5 48V30C49.5 17 72.5 17 72.5 30V48"/>
+          <circle cx="37" cy="12" r="4" stroke="none"/>
+        </g>
+        <g class="lp-plan" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M86.5 48V28H102.5C112.5 28 112.5 8 102.5 8H86.5"/>
+          <path d="M124.5 8V48"/>
+          <path d="M156.5 20C141.5 20 136.5 26 136.5 34C136.5 42 141.5 48 156.5 48V20"/>
+          <path d="M168.5 48V30C168.5 17 191.5 17 191.5 30V48"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  #lp-loader {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #lp-loader-inner {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lp-lemon-half {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    top: 0; left: 0;
+  }
+  .lp-lemon-left  { transform-origin: right center; }
+  .lp-lemon-right { transform-origin: left center; }
+  #lp-loader-logo {
+    position: absolute;
+    color: #E8DB80;
+    --lp-accent: #E8DB80;
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    width: 180px;
+  }
+  #lp-loader-logo svg {
+    width: 100%;
+    height: auto;
+  }
+</style>
+
+<script>
+  (function() {
+    const run = () => {
+      if (!window.gsap) { setTimeout(run, 50); return; }
+      const loader    = document.getElementById('lp-loader');
+      const inner     = document.getElementById('lp-loader-inner');
+      const lLeft     = document.querySelector('.lp-lemon-left');
+      const lRight    = document.querySelector('.lp-lemon-right');
+      const logoEl    = document.getElementById('lp-loader-logo');
+      const heroLogo  = document.querySelector('.hero-logo');
+
+      gsap.set(inner, { y: -300, scale: 0.5, opacity: 0 });
+
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      tl
+        .to(inner, { y: 0, scale: 1, opacity: 1, duration: 0.7, ease: 'bounce.out' })
+
+        .to(inner, { rotation: -6, duration: 0.08, ease: 'power1.inOut' })
+        .to(inner, { rotation:  6, duration: 0.08, ease: 'power1.inOut' })
+        .to(inner, { rotation: -5, duration: 0.07, ease: 'power1.inOut' })
+        .to(inner, { rotation:  5, duration: 0.07, ease: 'power1.inOut' })
+        .to(inner, { rotation:  0, duration: 0.07, ease: 'power1.inOut' })
+
+        .to(lLeft,  { x: -90, rotation: -15, opacity: 0.6, duration: 0.55, ease: 'back.out(1.2)' }, '+=0.1')
+        .to(lRight, { x:  90, rotation:  15, opacity: 0.6, duration: 0.55, ease: 'back.out(1.2)' }, '<')
+
+        .to(logoEl, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, '-=0.2')
+
+        .to([lLeft, lRight], { opacity: 0, duration: 0.3 }, '+=0.2')
+
+        .add(() => {
+          if (!heroLogo) return;
+          const heroRect  = heroLogo.getBoundingClientRect();
+          const loaderRect = logoEl.getBoundingClientRect();
+          const dx = (heroRect.left + heroRect.width  / 2) - (loaderRect.left + loaderRect.width  / 2);
+          const dy = (heroRect.top  + heroRect.height / 2) - (loaderRect.top  + loaderRect.height / 2);
+          const scale = heroRect.width / loaderRect.width;
+          gsap.to(logoEl, {
+            x: dx, y: dy,
+            scale: scale,
+            duration: 0.7,
+            ease: 'power3.inOut',
+          });
+        }, '+=0.15')
+
+        .to(loader, { opacity: 0, duration: 0.5, ease: 'power2.inOut',
+          onComplete: () => {
+            loader.style.display = 'none';
+            document.body.classList.remove('loading');
+          }
+        }, '+=0.5');
+    };
+    run();
+  })();
+</script>
 
 <!-- ========== NAV ========== -->
 <nav class="nav" id="nav" role="navigation" aria-label="メインナビゲーション">
@@ -646,10 +915,26 @@
     <ul class="nav-links-left">
       <li><a href="about.html">私たちについて</a></li>
       <li><a href="#solution">サービス内容</a></li>
+      <li><a href="aeo-geo.html">AEO / GEO</a></li>
     </ul>
-    <a href="#" class="nav-logo">Lin<span style="color:#E8DB80">Plan</span></a>
+    <a href="#" class="nav-logo" aria-label="LinPlan ホーム">
+      <svg class="lp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 52" role="img" aria-label="LinPlan">
+        <g class="lp-lin" fill="currentColor" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path fill="none" d="M3.5 8V48H24.5"/>
+          <path fill="none" d="M37 20V48"/>
+          <path fill="none" d="M49.5 48V30C49.5 17 72.5 17 72.5 30V48"/>
+          <circle cx="37" cy="12" r="4" stroke="none"/>
+        </g>
+        <g class="lp-plan" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M86.5 48V28H102.5C112.5 28 112.5 8 102.5 8H86.5"/>
+          <path d="M124.5 8V48"/>
+          <path d="M156.5 20C141.5 20 136.5 26 136.5 34C136.5 42 141.5 48 156.5 48V20"/>
+          <path d="M168.5 48V30C168.5 17 191.5 17 191.5 30V48"/>
+        </g>
+      </svg>
+    </a>
     <ul class="nav-links-right">
-      <li><a href="#works">制作事例</a></li>
+      <li><a href="#solution">制作事例</a></li>
       <li><a href="contact.html" class="nav-contact-link">お問い合わせ
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a></li>
@@ -665,7 +950,8 @@
   <ul>
     <li><a href="about.html" onclick="toggleMenu()">私たちについて</a></li>
     <li><a href="#solution" onclick="toggleMenu()">サービス内容</a></li>
-    <li><a href="#works" onclick="toggleMenu()">制作事例</a></li>
+    <li><a href="aeo-geo.html" onclick="toggleMenu()">AEO / GEO</a></li>
+    <li><a href="#solution" onclick="toggleMenu()">制作事例</a></li>
     <li><a href="contact.html" onclick="toggleMenu()">お問い合わせ</a></li>
   </ul>
 </div>
@@ -676,7 +962,22 @@
     <!-- Floating tiles are injected by JS -->
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-logo">Lin<span>Plan</span></div>
+      <div class="hero-logo" role="img" aria-label="LinPlan">
+        <svg class="lp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 52" aria-hidden="true">
+          <g class="lp-lin" fill="currentColor" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            <path fill="none" d="M3.5 8V48H24.5"/>
+            <path fill="none" d="M37 20V48"/>
+            <path fill="none" d="M49.5 48V30C49.5 17 72.5 17 72.5 30V48"/>
+            <circle cx="37" cy="12" r="4" stroke="none"/>
+          </g>
+          <g class="lp-plan" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M86.5 48V28H102.5C112.5 28 112.5 8 102.5 8H86.5"/>
+            <path d="M124.5 8V48"/>
+            <path d="M156.5 20C141.5 20 136.5 26 136.5 34C136.5 42 141.5 48 156.5 48V20"/>
+            <path d="M168.5 48V30C168.5 17 191.5 17 191.5 30V48"/>
+          </g>
+        </svg>
+      </div>
       <div class="hero-divider"></div>
       <p class="hero-tagline">見つけられ、選ばれるサイトを。</p>
     </div>
@@ -692,214 +993,398 @@
       <h2 class="section-title">そのサイト、事業の武器になっていますか？</h2>
       <p class="section-desc">新たに作る方も、すでにお持ちの方も。<br>多くのビジネスサイトが、次の3つのどこかでつまずいています。</p>
     </div>
-    <div class="problem-grid">
-      <div class="problem-card reveal">
-        <p class="problem-num">PROBLEM 01</p>
-        <h3>見つけてもらえない</h3>
-        <p>Google検索はもちろん、ChatGPTなどのAI検索でも、あなたの事業が候補に挙がっていない。</p>
-      </div>
-      <div class="problem-card reveal">
-        <p class="problem-num">PROBLEM 02</p>
-        <h3>強みが伝わらない</h3>
-        <p>見た目は整っていても、なぜ自分たちを選ぶべきかが言葉になっていない。</p>
-      </div>
-      <div class="problem-card reveal">
-        <p class="problem-num">PROBLEM 03</p>
-        <h3>成果につながらない</h3>
-        <p>アクセスはあるのに、問い合わせや売上に結びつかない。</p>
-      </div>
+
+    <div class="problem-stack">
+      <article class="problem-item" data-index="1">
+        <div class="problem-item__line" aria-hidden="true"></div>
+        <div class="problem-item__num" aria-hidden="true" data-parallax="0.5">
+          <span>01</span>
+        </div>
+        <div class="problem-item__body">
+          <p class="problem-item__label">PROBLEM 01</p>
+          <h3 class="problem-item__title" data-split>見つけてもらえない</h3>
+          <p class="problem-item__desc">Google検索はもちろん、ChatGPTなどのAI検索でも、あなたの事業が候補に挙がっていない。</p>
+        </div>
+        <div class="problem-item__illust" aria-hidden="true">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="100" fill="#e6f4f2"/>
+            <circle cx="88" cy="88" r="32" stroke="#3ba297" stroke-width="5"/>
+            <line x1="112" y1="112" x2="134" y2="134" stroke="#3ba297" stroke-width="5" stroke-linecap="round"/>
+            <text x="88" y="97" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="28" font-weight="700" fill="#3ba297" opacity="0.35">?</text>
+            <rect x="44" y="138" width="40" height="5" rx="2.5" fill="#b0b8c1"/>
+            <rect x="44" y="150" width="26" height="5" rx="2.5" fill="#b0b8c1"/>
+            <rect x="116" y="138" width="40" height="5" rx="2.5" fill="#e5e5e3"/>
+            <rect x="116" y="150" width="26" height="5" rx="2.5" fill="#e5e5e3"/>
+          </svg>
+        </div>
+      </article>
+
+      <article class="problem-item" data-index="2">
+        <div class="problem-item__line" aria-hidden="true"></div>
+        <div class="problem-item__num" aria-hidden="true" data-parallax="0.75">
+          <span>02</span>
+        </div>
+        <div class="problem-item__body">
+          <p class="problem-item__label">PROBLEM 02</p>
+          <h3 class="problem-item__title" data-split>強みが伝わらない</h3>
+          <p class="problem-item__desc">見た目は整っていても、なぜ自分たちを選ぶべきかが言葉になっていない。</p>
+        </div>
+        <div class="problem-item__illust" aria-hidden="true">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="100" fill="#e6f4f2"/>
+            <circle cx="62" cy="72" r="14" fill="#3ba297" opacity="0.5"/>
+            <path d="M40 118 C40 100 84 100 84 118" fill="#3ba297" opacity="0.5"/>
+            <rect x="82" y="60" width="72" height="44" rx="8" fill="#3ba297" opacity="0.15" stroke="#3ba297" stroke-width="2"/>
+            <polygon points="90,104 82,116 104,104" fill="#3ba297" opacity="0.15"/>
+            <polygon points="90,104 82,116 104,104" stroke="#3ba297" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="92" y="72" width="52" height="4" rx="2" fill="#3ba297" opacity="0.3"/>
+            <rect x="92" y="82" width="36" height="4" rx="2" fill="#3ba297" opacity="0.3"/>
+            <rect x="92" y="92" width="44" height="4" rx="2" fill="#3ba297" opacity="0.3"/>
+            <line x1="128" y1="128" x2="152" y2="152" stroke="#E8543A" stroke-width="4" stroke-linecap="round"/>
+            <line x1="152" y1="128" x2="128" y2="152" stroke="#E8543A" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </article>
+
+      <article class="problem-item" data-index="3">
+        <div class="problem-item__line" aria-hidden="true"></div>
+        <div class="problem-item__num" aria-hidden="true" data-parallax="1.0">
+          <span>03</span>
+        </div>
+        <div class="problem-item__body">
+          <p class="problem-item__label">PROBLEM 03</p>
+          <h3 class="problem-item__title" data-split>成果につながらない</h3>
+          <p class="problem-item__desc">アクセスはあるのに、問い合わせや売上に結びつかない。</p>
+        </div>
+        <div class="problem-item__illust" aria-hidden="true">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="100" fill="#e6f4f2"/>
+            <line x1="46" y1="148" x2="160" y2="148" stroke="#b0b8c1" stroke-width="3" stroke-linecap="round"/>
+            <line x1="46" y1="148" x2="46" y2="54" stroke="#b0b8c1" stroke-width="3" stroke-linecap="round"/>
+            <polyline points="56,132 80,108 104,90 128,76" stroke="#3ba297" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="128,76 152,108" stroke="#E8543A" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="6 4"/>
+            <polyline points="144,108 152,108 152,100" stroke="#E8543A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="56" cy="132" r="4" fill="#3ba297"/>
+            <circle cx="80" cy="108" r="4" fill="#3ba297"/>
+            <circle cx="104" cy="90" r="4" fill="#3ba297"/>
+            <circle cx="128" cy="76" r="4" fill="#3ba297"/>
+            <circle cx="152" cy="108" r="5" fill="#E8543A"/>
+          </svg>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ========== AGITATE ========== -->
 <section class="agitate" id="agitate">
-  <div class="agitate-inner reveal">
-    <p class="section-en">Why it matters</p>
-    <h2 class="agitate-title">「あるだけのサイト」が、<br>静かに機会を失っている</h2>
-    <div class="agitate-body">
-      <p>検索結果の一番上は、もはや青いリンクではなくAIの回答です。そこに載らないということは、比較検討の土俵にすら立てないということ。</p>
-      <p>ブランドの魅力が整理されていないサイトは、訪問者に「で、何の会社だっけ」と思われた瞬間に離脱されます。</p>
-      <p>成果につながらないサイトは、毎月の運用費がそのまま損失になる——。</p>
-      <p>ひとつひとつは小さな綻びでも、積み重なれば事業の成長スピードを確実に削ります。</p>
-    </div>
-  </div>
-</section>
+  <div class="agitate-inner">
+    <p class="section-en agitate-anim-label">Why it matters</p>
+    <h2 class="agitate-title agitate-anim-title">「あるだけのサイト」が、静かに機会を失っている</h2>
 
-<!-- ========== SOLUTION ========== -->
-<section class="section" id="solution">
-  <div class="container">
-    <div class="section-head section-head--center reveal">
-      <p class="section-en">Solution</p>
-      <h2 class="section-title">見つけられ、伝わり、成果を生むサイトへ</h2>
-      <p class="section-desc">目的と課題に合わせて、必要なものだけを丁寧に。<br>3つのサービスでご支援します。</p>
+    <div class="agitate-flow">
+      <div class="agitate-card">
+        <div class="agitate-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
+            <path d="M11 8v3h3" stroke-width="1.8"/>
+          </svg>
+        </div>
+        <p class="agitate-card__num">STEP 01</p>
+        <h3 class="agitate-card__title">AIに見つけてもらえない</h3>
+        <p class="agitate-card__desc">ChatGPT・Perplexityなどの AI検索に載らず、<br>比較検討の土俵に立てない</p>
+      </div>
+
+      <div class="agitate-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <div class="agitate-card">
+        <div class="agitate-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <p class="agitate-card__num">STEP 02</p>
+        <h3 class="agitate-card__title">強みが伝わらず離脱</h3>
+        <p class="agitate-card__desc">訪問してもブランドの魅力が整理されていないため、「何の会社?」と離脱される</p>
+      </div>
+
+      <div class="agitate-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <div class="agitate-card">
+        <div class="agitate-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <p class="agitate-card__num">STEP 03</p>
+        <h3 class="agitate-card__title">運用費が損失になる</h3>
+        <p class="agitate-card__desc">問い合わせ・売上に結びつかず、毎月のコストがそのまま赤字になり続ける</p>
+      </div>
     </div>
-    <div class="service-grid">
-      <div class="service-card reveal">
-        <p class="service-num">SERVICE 01</p>
-        <h3>ホームページ制作</h3>
-        <p>コーポレート・店舗・サービスサイトを、検索／AI検索の両方に最適化した設計で。WordPress・レスポンシブ・公開後の運用まで一貫して対応します。</p>
+
+    <div class="agitate-conclusion">
+      <div class="agitate-conclusion__icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
-      <div class="service-card reveal">
-        <p class="service-num">SERVICE 02</p>
-        <h3>アプリ制作</h3>
-        <p>iOS/Androidのモバイルアプリ、業務Webアプリを企画〜開発まで。使いやすいUI/UXと安定した動作で、現場の課題を解決します。</p>
-      </div>
-      <div class="service-card reveal">
-        <p class="service-num">SERVICE 03</p>
-        <h3>AIサービス</h3>
-        <p>ChatGPT・生成AIを活用した業務効率化、AIチャットボット導入支援。業務フローに合わせたワンストップのご提案を行います。</p>
-        <a href="ai-service.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:.85rem;font-weight:600;color:var(--accent);">詳しく見る <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
-      </div>
+      <p class="agitate-conclusion__text">ひとつひとつは小さな綻びでも、積み重なれば<strong>事業の成長スピードを確実に削ります</strong>。「あるだけのサイト」は、毎月静かに機会を失い続けています。</p>
     </div>
   </div>
 </section>
 
 <!-- ========== AEO / GEO ========== -->
-<section class="aeo-geo section-gray" id="aeo-geo">
+<section class="aeo-geo section" id="aeo-geo">
   <div class="container">
     <div class="section-head section-head--center reveal">
       <p class="section-en">AEO / GEO</p>
       <h2 class="section-title">これからのサイトは<br>「AIに選ばれる」必要があります</h2>
       <p class="section-desc">いま検索行動は、GoogleからChatGPT・Perplexity・Geminiといった<br>AIへと急速に移っています。従来のSEOだけでは、もう届きません。</p>
     </div>
-    <div class="aeo-geo-cards">
-      <div class="aeo-geo-card reveal">
-        <p class="aeo-geo-label">AEO</p>
-        <h3>Answer Engine Optimization</h3>
-        <p>AIが質問に答えるとき、情報源として引用されるための最適化。構造化データ・明確な見出し階層・一問一答形式の設計が鍵になります。</p>
+
+    <!-- AEO -->
+    <div class="aeo-geo-row reveal">
+      <div class="aeo-geo-illust">
+        <!-- AEO: AIの回答カードに「あなたのサイト」が引用ソースとして選ばれる -->
+        <svg viewBox="0 0 340 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 背景ぼかし -->
+          <ellipse cx="170" cy="228" rx="150" ry="20" fill="#e6f4f2" opacity="0.55"/>
+
+          <!-- メインカード（AI 回答パネル） -->
+          <rect x="44" y="34" width="252" height="184" rx="20" fill="#ffffff" stroke="#e5e5e3" stroke-width="1.5"/>
+
+          <!-- 上部: AI アバター -->
+          <rect x="62" y="56" width="40" height="40" rx="12" fill="#3ba297"/>
+          <circle cx="74" cy="74" r="3.5" fill="#ffffff"/>
+          <circle cx="90" cy="74" r="3.5" fill="#ffffff"/>
+          <path d="M73 84 Q82 90 91 84" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <line x1="82" y1="46" x2="82" y2="56" stroke="#3ba297" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="82" cy="44" r="2.5" fill="#3ba297"/>
+
+          <!-- AI ラベル -->
+          <rect x="114" y="62" width="34" height="18" rx="9" fill="#f0f7f6"/>
+          <text x="131" y="75" text-anchor="middle" font-size="10" fill="#3ba297" font-weight="700" font-family="sans-serif" letter-spacing="1.4">AI</text>
+
+          <!-- AI 回答テキスト行 -->
+          <rect x="114" y="88" width="146" height="5" rx="2.5" fill="#d1d5db"/>
+          <rect x="114" y="100" width="118" height="5" rx="2.5" fill="#d1d5db"/>
+
+          <!-- 引用ソース カード（あなたのサイト = ハイライト） -->
+          <rect x="62" y="124" width="216" height="76" rx="14" fill="#fffaeb" stroke="#E8DB80" stroke-width="2.5"/>
+
+          <!-- ミニサイト プレビュー -->
+          <rect x="78" y="140" width="52" height="48" rx="8" fill="#3ba297"/>
+          <rect x="84" y="146" width="40" height="3.5" rx="1.5" fill="#ffffff" opacity="0.95"/>
+          <rect x="84" y="153" width="26" height="3" rx="1.5" fill="#ffffff" opacity="0.6"/>
+          <rect x="84" y="164" width="18" height="18" rx="3" fill="#ffffff" opacity="0.45"/>
+          <rect x="106" y="164" width="18" height="18" rx="3" fill="#ffffff" opacity="0.45"/>
+
+          <!-- サイト名 + URL + SOURCE バッジ -->
+          <rect x="142" y="146" width="100" height="6" rx="3" fill="#32373c"/>
+          <rect x="142" y="158" width="78" height="4" rx="2" fill="#a0a0a0"/>
+          <rect x="142" y="174" width="62" height="14" rx="7" fill="#3ba297"/>
+          <text x="173" y="184" text-anchor="middle" font-size="8" fill="#ffffff" font-weight="700" font-family="sans-serif" letter-spacing="1.4">SOURCE</text>
+
+          <!-- 選ばれたチェックバッジ -->
+          <circle cx="270" cy="148" r="20" fill="#3ba297" stroke="#ffffff" stroke-width="3"/>
+          <path d="M261 149 l6 6 l12 -12" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+          <!-- 装飾スパークル -->
+          <g opacity="0.7">
+            <path d="M28 130 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 z" fill="#E8DB80"/>
+            <path d="M312 90 l1.5 4 l4 1.5 l-4 1.5 l-1.5 4 l-1.5 -4 l-4 -1.5 l4 -1.5 z" fill="#3ba297"/>
+            <circle cx="36" cy="200" r="3" fill="#3ba297"/>
+            <circle cx="306" cy="210" r="3.5" fill="#E8DB80"/>
+          </g>
+        </svg>
       </div>
-      <div class="aeo-geo-card reveal">
-        <p class="aeo-geo-label">GEO</p>
-        <h3>Generative Engine Optimization</h3>
-        <p>生成AIの回答文そのものに、自社の名前が自然に登場するための最適化。ブランドの文脈化・信頼性シグナル・適切な言及構造が必要です。</p>
+      <div class="aeo-geo-text">
+        <p class="aeo-geo-tag">AEO</p>
+        <h3>AIに質問されたとき、<br>あなたのサイトが「答え」として選ばれる</h3>
+        <p>ChatGPTやPerplexityが質問に答えるとき、信頼できる情報源として引用されるための設計です。構造化データや明快な見出し構造など、AIが読み解きやすいサイトをつくります。</p>
       </div>
     </div>
-    <div class="aeo-geo-measures reveal">
-      <h4>LinPlanの対応内容</h4>
-      <ul>
-        <li>schema.org による構造化データマークアップ</li>
-        <li>AIクローラーが読み取りやすい情報設計・見出し構造</li>
-        <li>FAQ・Q&amp;A形式での知識資産化</li>
-        <li>E-E-A-T（経験・専門性・権威性・信頼性）を高めるコンテンツ設計</li>
-        <li>ブランド言及の蓄積を促す導線設計</li>
-      </ul>
+
+    <!-- GEO -->
+    <div class="aeo-geo-row aeo-geo-row--reverse reveal">
+      <div class="aeo-geo-illust">
+        <!-- GEO: AIの回答テキスト中に「あなたのブランド名」がイエローでハイライトされる -->
+        <svg viewBox="0 0 340 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 背景ぼかし -->
+          <ellipse cx="170" cy="228" rx="150" ry="20" fill="#e6f4f2" opacity="0.55"/>
+
+          <!-- AI 回答カード -->
+          <rect x="44" y="34" width="252" height="184" rx="20" fill="#ffffff" stroke="#e5e5e3" stroke-width="1.5"/>
+
+          <!-- 引用クォート -->
+          <path d="M64 70 q0 -10 10 -10 l0 6 q-4 0 -4 4 l4 0 l0 12 l-10 0 z M82 70 q0 -10 10 -10 l0 6 q-4 0 -4 4 l4 0 l0 12 l-10 0 z" fill="#3ba297" opacity="0.25"/>
+
+          <!-- AI 応答テキスト 1 行目 -->
+          <rect x="64" y="92" width="64" height="6" rx="3" fill="#d1d5db"/>
+          <!-- ブランド名ハイライト ピル -->
+          <rect x="134" y="86" width="92" height="20" rx="10" fill="#E8DB80"/>
+          <text x="180" y="100" text-anchor="middle" font-size="11" fill="#32373c" font-weight="700" font-family="sans-serif" letter-spacing="0.5">YourBrand</text>
+          <!-- 続きの行 -->
+          <rect x="232" y="92" width="44" height="6" rx="3" fill="#d1d5db"/>
+
+          <!-- 続きの応答テキスト -->
+          <rect x="64" y="120" width="208" height="6" rx="3" fill="#d1d5db"/>
+          <rect x="64" y="134" width="184" height="6" rx="3" fill="#d1d5db"/>
+          <rect x="64" y="148" width="160" height="6" rx="3" fill="#d1d5db"/>
+
+          <!-- 下部 AI バッジ -->
+          <rect x="64" y="174" width="48" height="22" rx="11" fill="#f0f7f6"/>
+          <circle cx="76" cy="185" r="3" fill="#3ba297"/>
+          <text x="98" y="190" text-anchor="end" font-size="10" fill="#3ba297" font-weight="700" font-family="sans-serif" letter-spacing="1.4">AI</text>
+
+          <!-- ブランド言及を指すスパークル（ハイライト上） -->
+          <path d="M180 70 l2.5 7 l7 2.5 l-7 2.5 l-2.5 7 l-2.5 -7 l-7 -2.5 l7 -2.5 z" fill="#E8DB80"/>
+
+          <!-- 浮遊する mention バッジ（@） -->
+          <circle cx="296" cy="74" r="18" fill="#3ba297" stroke="#ffffff" stroke-width="3"/>
+          <text x="296" y="80" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="700" font-family="sans-serif">@</text>
+
+          <!-- 上昇トレンド矢印（認知度アップ） -->
+          <circle cx="296" cy="180" r="20" fill="#E8DB80" stroke="#ffffff" stroke-width="3"/>
+          <path d="M288 184 l8 -10 l8 10" stroke="#32373c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <line x1="296" y1="184" x2="296" y2="190" stroke="#32373c" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- 装飾スパークル -->
+          <g opacity="0.7">
+            <circle cx="32" cy="120" r="3" fill="#3ba297"/>
+            <path d="M28 200 l1.5 4 l4 1.5 l-4 1.5 l-1.5 4 l-1.5 -4 l-4 -1.5 l4 -1.5 z" fill="#3ba297"/>
+            <circle cx="312" cy="120" r="3" fill="#E8DB80"/>
+          </g>
+        </svg>
+      </div>
+      <div class="aeo-geo-text">
+        <p class="aeo-geo-tag">GEO</p>
+        <h3>AIの回答文の中に、<br>自然とあなたのブランド名が登場する</h3>
+        <p>生成AIが回答を生成するとき、文中に自社名が自然に言及されるための最適化です。ブランドの信頼性を高め、AIに「参照すべき存在」として認識させるコンテンツ設計を行います。</p>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- ========== WORKS ========== -->
-<section class="section" id="works">
+<!-- ========== SOLUTION (Service + Works 統合) ========== -->
+<section class="section section-gray" id="solution">
   <div class="container">
     <div class="section-head section-head--center reveal">
-      <p class="section-en">Works</p>
-      <h2 class="section-title">制作事例</h2>
-      <p class="section-desc">コーポレートサイト、店舗サイト、アプリなど、<br>さまざまな業種の制作を手がけています。</p>
+      <p class="section-en">Solution</p>
+      <h2 class="section-title">見つけられ、伝わり、成果を生むサイトへ</h2>
+      <p class="section-desc">目的と課題に合わせて、必要なものだけを丁寧に。<br>3つのサービスでご支援します。</p>
     </div>
 
-    <div class="works-grid">
-      <article class="work-card reveal">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <img src="https://placehold.co/800x1800/e8f0fe/4a90d9?text=Site+1%0AScroll+%E2%86%93" alt="制作事例1">
+    <!-- SERVICE 01: ホームページ制作 -->
+    <div class="service-group reveal">
+      <div class="service-group__head">
+        <h3 class="service-group__title">ホームページ制作</h3>
+        <p class="service-group__desc">コーポレート・店舗・サービスサイトを、検索／AI検索の両方に最適化した設計で。WordPress・レスポンシブ・公開後の運用まで一貫して対応します。</p>
+      </div>
+      <div class="service-group__works">
+        <article class="work-card">
+          <div class="monitor">
+            <div class="monitor-screen">
+              <img src="https://placehold.co/800x1800/e8f0fe/4a90d9?text=Site+1%0AScroll+%E2%86%93" alt="制作事例1">
+            </div>
+            <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
           </div>
-          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="work-info">
-          <p class="work-category">Corporate</p>
-          <h3 class="work-name">建築設計事務所 コーポレートサイト</h3>
-          <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">レスポンシブ</span><span class="work-tag">写真撮影</span></div>
-        </div>
-      </article>
-
-      <article class="work-card reveal">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <img src="https://placehold.co/800x1800/fef3e0/e67e22?text=Site+2%0AScroll+%E2%86%93" alt="制作事例2">
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+          <div class="work-info">
+            <p class="work-category">Corporate</p>
+            <h3 class="work-name">建築設計事務所 コーポレートサイト</h3>
+            <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">レスポンシブ</span><span class="work-tag">写真撮影</span></div>
           </div>
-          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="work-info">
-          <p class="work-category">Clinic</p>
-          <h3 class="work-name">歯科クリニック ホームページリニューアル</h3>
-          <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">CMS</span><span class="work-tag">SEO対策</span></div>
-        </div>
-      </article>
-
-      <article class="work-card reveal">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <img src="https://placehold.co/800x1800/e8f5e9/2e7d32?text=Site+3%0AScroll+%E2%86%93" alt="制作事例3">
+        </article>
+        <article class="work-card">
+          <div class="monitor">
+            <div class="monitor-screen">
+              <img src="https://placehold.co/800x1800/fef3e0/e67e22?text=Site+2%0AScroll+%E2%86%93" alt="制作事例2">
+            </div>
+            <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
           </div>
-          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="work-info">
-          <p class="work-category">Cafe &amp; Restaurant</p>
-          <h3 class="work-name">カフェ・ベーカリー 店舗サイト</h3>
-          <div class="work-tags"><span class="work-tag">HTML / CSS</span><span class="work-tag">ロゴ制作</span><span class="work-tag">写真撮影</span></div>
-        </div>
-      </article>
-
-      <article class="work-card reveal">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <img src="https://placehold.co/800x1800/fce4ec/c62828?text=Site+4%0AScroll+%E2%86%93" alt="制作事例4">
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+          <div class="work-info">
+            <p class="work-category">Clinic</p>
+            <h3 class="work-name">歯科クリニック ホームページリニューアル</h3>
+            <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">CMS</span><span class="work-tag">SEO対策</span></div>
           </div>
-          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="work-info">
-          <p class="work-category">App</p>
-          <h3 class="work-name">フィットネスジム 予約アプリ</h3>
-          <div class="work-tags"><span class="work-tag">React Native</span><span class="work-tag">UI/UX</span><span class="work-tag">API連携</span></div>
-        </div>
-      </article>
-
-      <article class="work-card reveal">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <img src="https://placehold.co/800x1800/f3e5f5/7b1fa2?text=Site+5%0AScroll+%E2%86%93" alt="制作事例5">
+        </article>
+        <article class="work-card">
+          <div class="monitor">
+            <div class="monitor-screen">
+              <img src="https://placehold.co/800x1800/e8f5e9/2e7d32?text=Site+3%0AScroll+%E2%86%93" alt="制作事例3">
+            </div>
+            <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
           </div>
-          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="work-info">
-          <p class="work-category">Beauty</p>
-          <h3 class="work-name">美容室 ブランドサイト制作</h3>
-          <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">ブランディング</span><span class="work-tag">名刺制作</span></div>
-        </div>
-      </article>
-
-      <article class="work-card reveal">
-        <div class="monitor">
-          <div class="monitor-screen">
-            <img src="https://placehold.co/800x1800/e0f2f1/00695c?text=Site+6%0AScroll+%E2%86%93" alt="制作事例6">
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+          <div class="work-info">
+            <p class="work-category">Cafe &amp; Restaurant</p>
+            <h3 class="work-name">カフェ・ベーカリー 店舗サイト</h3>
+            <div class="work-tags"><span class="work-tag">HTML / CSS</span><span class="work-tag">ロゴ制作</span><span class="work-tag">写真撮影</span></div>
           </div>
-          <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="work-info">
-          <p class="work-category">Corporate</p>
-          <h3 class="work-name">製造業 コーポレートサイト制作</h3>
-          <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">多言語対応</span><span class="work-tag">写真撮影</span></div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
 
-    <div class="works-more reveal">
-      <a href="#">
-        制作事例をもっと見る
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+    <!-- SERVICE 02: アプリ制作 -->
+    <div class="service-group reveal">
+      <div class="service-group__head">
+        <h3 class="service-group__title">アプリ制作</h3>
+        <p class="service-group__desc">iOS/Androidのモバイルアプリ、業務Webアプリを企画〜開発まで。使いやすいUI/UXと安定した動作で、現場の課題を解決します。</p>
+      </div>
+      <div class="service-group__works service-group__works-2col">
+        <article class="work-card">
+          <div class="monitor">
+            <div class="monitor-screen">
+              <img src="https://placehold.co/800x1800/fce4ec/c62828?text=Site+4%0AScroll+%E2%86%93" alt="制作事例4">
+            </div>
+            <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+          </div>
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+          <div class="work-info">
+            <p class="work-category">App</p>
+            <h3 class="work-name">フィットネスジム 予約アプリ</h3>
+            <div class="work-tags"><span class="work-tag">React Native</span><span class="work-tag">UI/UX</span><span class="work-tag">API連携</span></div>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="monitor">
+            <div class="monitor-screen">
+              <img src="https://placehold.co/800x1800/f3e5f5/7b1fa2?text=Site+5%0AScroll+%E2%86%93" alt="制作事例5">
+            </div>
+            <div class="monitor-chin"><span class="monitor-chin-dot"></span></div>
+          </div>
+          <div class="monitor-stand"></div>
+          <div class="monitor-base"></div>
+          <div class="work-info">
+            <p class="work-category">Beauty</p>
+            <h3 class="work-name">美容室 ブランドサイト制作</h3>
+            <div class="work-tags"><span class="work-tag">WordPress</span><span class="work-tag">ブランディング</span><span class="work-tag">名刺制作</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- SERVICE 03: AIサービス -->
+    <div class="service-group reveal">
+      <div class="service-group__head">
+        <h3 class="service-group__title">AIサービス</h3>
+        <p class="service-group__desc">ChatGPT・生成AIを活用した業務効率化、AIチャットボット導入支援。業務フローに合わせたワンストップのご提案を行います。</p>
+        <a href="ai-service.html" class="service-group__cta">
+          詳しく見る
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -909,18 +1394,49 @@
 <div class="footer-backdrop" id="footerBackdrop"></div>
 <footer class="footer-wrapper" id="footerWrapper" role="contentinfo">
   <div class="footer-panel">
-    <p class="footer-logo">Lin<span style="color:#c8a800">Plan</span></p>
+    <p class="footer-logo" role="img" aria-label="LinPlan">
+      <svg class="lp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 52" aria-hidden="true">
+        <g class="lp-lin" fill="currentColor" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path fill="none" d="M3.5 8V48H24.5"/>
+          <path fill="none" d="M37 20V48"/>
+          <path fill="none" d="M49.5 48V30C49.5 17 72.5 17 72.5 30V48"/>
+          <circle cx="37" cy="12" r="4" stroke="none"/>
+        </g>
+        <g class="lp-plan" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M86.5 48V28H102.5C112.5 28 112.5 8 102.5 8H86.5"/>
+          <path d="M124.5 8V48"/>
+          <path d="M156.5 20C141.5 20 136.5 26 136.5 34C136.5 42 141.5 48 156.5 48V20"/>
+          <path d="M168.5 48V30C168.5 17 191.5 17 191.5 30V48"/>
+        </g>
+      </svg>
+    </p>
     <ul class="footer-nav">
       <li><a href="about.html">私たちについて</a></li>
       <li><a href="#solution">サービス内容</a></li>
-      <li><a href="#works">制作事例</a></li>
+      <li><a href="aeo-geo.html">AEO / GEO</a></li>
+      <li><a href="#solution">制作事例</a></li>
       <li><a href="contact.html">お問い合わせ</a></li>
     </ul>
     <address class="footer-address">東京都渋谷区 | your-email@example.com</address>
     <p class="footer-copy">&copy; 2026 LinPlan. All Rights Reserved.</p>
     <button class="footer-toggle" id="footerToggle" aria-label="フッターを開閉">
       <span class="footer-toggle-label">
-        <span class="footer-toggle-open">LinPlan</span>
+        <span class="footer-toggle-open" role="img" aria-label="LinPlan">
+          <svg class="lp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 52" aria-hidden="true">
+            <g class="lp-lin" fill="currentColor" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+              <path fill="none" d="M3.5 8V48H24.5"/>
+              <path fill="none" d="M37 20V48"/>
+              <path fill="none" d="M49.5 48V30C49.5 17 72.5 17 72.5 30V48"/>
+              <circle cx="37" cy="12" r="4" stroke="none"/>
+            </g>
+            <g class="lp-plan" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M86.5 48V28H102.5C112.5 28 112.5 8 102.5 8H86.5"/>
+              <path d="M124.5 8V48"/>
+              <path d="M156.5 20C141.5 20 136.5 26 136.5 34C136.5 42 141.5 48 156.5 48V20"/>
+              <path d="M168.5 48V30C168.5 17 191.5 17 191.5 30V48"/>
+            </g>
+          </svg>
+        </span>
         <span class="footer-toggle-close">CLOSE</span>
       </span>
       <span class="footer-toggle-lines">
@@ -1002,7 +1518,6 @@
 
     frame.insertBefore(fragment, overlay);
 
-    // 画面サイズに応じてタイルサイズをスケーリング
     const applyTileScale = () => {
       const scale = Math.max(0.45, Math.min(1.25, window.innerWidth / 1400));
       tileEls.forEach((tile, i) => {
@@ -1020,6 +1535,204 @@
     applyTileScale();
     window.addEventListener('resize', applyTileScale, { passive: true });
   })();
+
+  // ========== PROBLEM: GSAP + ScrollTrigger + SplitType ==========
+  window.addEventListener('load', () => {
+    const problemSection = document.getElementById('problem');
+    if (!problemSection) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (window.SplitType) {
+      document.querySelectorAll('[data-split]').forEach((el) => {
+        new SplitType(el, { types: 'chars', charClass: 'char' });
+      });
+    }
+
+    const problemItems = gsap.utils.toArray('#problem .problem-item');
+
+    problemItems.forEach((item) => {
+      const chars = item.querySelectorAll('.problem-item__title .char');
+      if (chars.length) {
+        chars.forEach((c) => { c.style.transform = 'none'; c.style.opacity = '1'; });
+      }
+    });
+
+    // モバイルは通常レイアウト + 各 item ごとに is-inview を付与
+    if (window.matchMedia('(max-width: 900px)').matches || problemItems.length < 3) {
+      problemItems.forEach((item) => {
+        ScrollTrigger.create({
+          trigger: item,
+          start: 'top 80%',
+          onEnter: () => item.classList.add('is-inview'),
+        });
+      });
+      ScrollTrigger.refresh();
+      return;
+    }
+
+    // ========== デスクトップ: スタック→スライド ==========
+    const stack = problemSection.querySelector('.problem-stack');
+    stack.classList.add('is-stacked');
+
+    // is-stacked 適用後に最初の item の高さを測ってコンテナに反映
+    const measureHeight = () => {
+      let maxH = 0;
+      problemItems.forEach((it) => { maxH = Math.max(maxH, it.offsetHeight); });
+      stack.style.height = (maxH + 60) + 'px';
+    };
+    measureHeight();
+    window.addEventListener('resize', () => {
+      measureHeight();
+      ScrollTrigger.refresh();
+    }, { passive: true });
+
+    // 初期スタック状態: item 1 が前面、2/3 はわずかに下にずれて背面に重なる
+    gsap.set(problemItems[0], { y: 0, scale: 1, opacity: 1, zIndex: 3 });
+    gsap.set(problemItems[1], {
+      y: 24, scale: 0.97, opacity: 0.95, zIndex: 2,
+      boxShadow: '0 8px 24px rgba(0,0,0,0.04)',
+    });
+    gsap.set(problemItems[2], {
+      y: 48, scale: 0.94, opacity: 0.9, zIndex: 1,
+      boxShadow: '0 8px 24px rgba(0,0,0,0.04)',
+    });
+
+    // 1枚目はすぐ is-inview を付与
+    problemItems[0].classList.add('is-inview');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#problem',
+        start: 'top top',
+        end: '+=240%',
+        pin: true,
+        scrub: 1.2,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const p = self.progress;
+          // タイミングに応じて is-inview を切り替え
+          problemItems[1].classList.toggle('is-inview', p > 0.18);
+          problemItems[2].classList.toggle('is-inview', p > 0.55);
+        },
+      }
+    });
+
+    const backShadow = '0 8px 24px rgba(0,0,0,0.04)';
+
+    tl
+      // ===== Phase 1: item1 → 裏, item2 → 前面, item3 → 中段 =====
+      // item1 が一度上に持ち上がり、裏に回って下へ降りる
+      .to(problemItems[0], {
+        y: -60, duration: 0.7, ease: 'power2.in',
+      }, 0)
+      .set(problemItems[0], { zIndex: 1, boxShadow: backShadow }, 0.7)
+      .to(problemItems[0], {
+        y: 48, scale: 0.94, opacity: 0.9, duration: 0.9, ease: 'power2.out',
+      }, 0.7)
+      // item2 が前面に上がる
+      .to(problemItems[1], {
+        y: 0, scale: 1, opacity: 1, duration: 1.6, ease: 'power2.inOut',
+      }, 0)
+      .set(problemItems[1], { zIndex: 3, boxShadow: 'none' }, 0.7)
+      // item3 が中段へ
+      .to(problemItems[2], {
+        y: 24, scale: 0.97, opacity: 0.95, duration: 1.6, ease: 'power2.inOut',
+      }, 0)
+      .set(problemItems[2], { zIndex: 2 }, 0.7)
+
+      // ===== Phase 2: item2 → 裏, item3 → 前面, item1 → 中段 =====
+      .to(problemItems[1], {
+        y: -60, duration: 0.7, ease: 'power2.in',
+      }, 1.8)
+      .set(problemItems[1], { zIndex: 1, boxShadow: backShadow }, 2.5)
+      .to(problemItems[1], {
+        y: 48, scale: 0.94, opacity: 0.9, duration: 0.9, ease: 'power2.out',
+      }, 2.5)
+
+      .to(problemItems[2], {
+        y: 0, scale: 1, opacity: 1, duration: 1.6, ease: 'power2.inOut',
+      }, 1.8)
+      .set(problemItems[2], { zIndex: 3, boxShadow: 'none' }, 2.5)
+
+      .to(problemItems[0], {
+        y: 24, scale: 0.97, opacity: 0.95, duration: 1.6, ease: 'power2.inOut',
+      }, 1.8)
+      .set(problemItems[0], { zIndex: 2 }, 2.5);
+
+    ScrollTrigger.refresh();
+  });
+
+  // ========== AGITATE: スタック→スライドアニメーション ==========
+  window.addEventListener('load', () => {
+    if (!window.gsap || !window.ScrollTrigger) return;
+
+    const ease = 'power3.out';
+    const cards = gsap.utils.toArray('.agitate-card');
+    const arrows = gsap.utils.toArray('.agitate-arrow');
+    const conclusion = document.querySelector('.agitate-conclusion');
+    const label = document.querySelector('.agitate-anim-label');
+    const title = document.querySelector('.agitate-anim-title');
+
+    if (cards.length < 3) return;
+
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      [label, title, ...cards, ...arrows, conclusion].forEach(el => {
+        if (el) { el.style.opacity = 1; el.style.transform = 'none'; }
+      });
+      return;
+    }
+
+    const c1 = cards[0].getBoundingClientRect();
+    const c2 = cards[1].getBoundingClientRect();
+    const c3 = cards[2].getBoundingClientRect();
+    const offset2 = c2.left - c1.left;
+    const offset3 = c3.left - c1.left;
+
+    gsap.set(cards[0], { zIndex: 3 });
+    gsap.set(cards[1], { x: -offset2, zIndex: 2,
+      boxShadow: '-4px 4px 0 rgba(0,0,0,0.05), -8px 8px 0 rgba(0,0,0,0.03)' });
+    gsap.set(cards[2], { x: -offset3, zIndex: 1,
+      boxShadow: '-8px 8px 0 rgba(0,0,0,0.05), -16px 16px 0 rgba(0,0,0,0.03)' });
+
+    gsap.to([label, title], {
+      opacity: 1, y: 0, duration: 0.9, ease, stagger: 0.15,
+      scrollTrigger: { trigger: '#agitate', start: 'top 80%' }
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#agitate',
+        start: 'top top',
+        end: '+=240%',
+        pin: true,
+        scrub: 1.2,
+        anticipatePin: 1,
+      }
+    });
+
+    tl
+      .to(cards[1], {
+        x: 0, duration: 2,
+        ease: 'power2.inOut',
+        boxShadow: 'none',
+        clearProps: 'zIndex',
+      }, 0)
+      .to(arrows[0], { opacity: 1, duration: 0.6 }, 1.6)
+
+      .to(cards[2], {
+        x: 0, duration: 2,
+        ease: 'power2.inOut',
+        boxShadow: 'none',
+        clearProps: 'zIndex',
+      }, 2)
+      .to(arrows[1], { opacity: 1, duration: 0.6 }, 3.6)
+
+      .to(conclusion, { opacity: 1, y: 0, duration: 1, ease }, 4.2);
+  });
 </script>
 <script src="js/common.js"></script>
 

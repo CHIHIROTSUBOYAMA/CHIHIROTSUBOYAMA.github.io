@@ -38,6 +38,7 @@
     revealTargets.forEach(el => observer.observe(el));
   }
 
+
   // ========== FOOTER EXPANDING PANEL ==========
   const wrapper = document.getElementById('footerWrapper');
   const toggle = document.getElementById('footerToggle');
@@ -79,7 +80,7 @@
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = maxScroll > 0 ? scrollY / maxScroll : 0;
 
-      if (scrollPercent > 0.8 && scrollY > lastScrollY) {
+      if (scrollPercent > 0.98 && scrollY > lastScrollY) {
         if (!wrapper.classList.contains('auto_open')) openFooter(false);
       }
       if (scrollY < lastScrollY && wrapper.classList.contains('auto_open')) {
