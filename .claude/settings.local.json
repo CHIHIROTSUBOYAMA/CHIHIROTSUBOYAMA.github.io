@@ -37,7 +37,9 @@
       "Bash(mkdir -p /tmp/design2)",
       "Bash(cp \"C:\\\\Users\\\\tsubo\\\\.claude\\\\projects\\\\C--Users-tsubo-MyProject-MyPortfolio\\\\ff01835b-0a7b-4cc1-b1ff-dcf8fa5852c4\\\\tool-results\\\\webfetch-1777137611028-lm9mui.bin\" /tmp/design2/d.gz)",
       "Bash(gunzip -k d.gz)",
-      "Bash(tar -xf d)"
+      "Bash(tar -xf d)",
+      "WebFetch(domain:www.yamatoen.or.jp)",
+      "Bash(curl -s -L --max-time 20 \"https://www.yamatoen.or.jp/\")"
     ]
   }
 }

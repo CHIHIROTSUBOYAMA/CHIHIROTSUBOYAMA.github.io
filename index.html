@@ -217,6 +217,48 @@
   }
   .section-head--center .section-desc { margin-left: auto; margin-right: auto; }
 
+  /* ============ ABOUT ============ */
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .about-content p {
+    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.05rem, 2.2vw, 1.6rem);
+    line-height: 200%;
+    letter-spacing: .12em;
+    color: #d0d0d0;
+    margin-bottom: 36px;
+  }
+  .about-content p:last-child { margin-bottom: 0; }
+  .about-content .line {
+    display: block;
+    color: #d0d0d0;
+    background-image: linear-gradient(
+      to right,
+      var(--text) 0%,
+      var(--text) 50%,
+      #d0d0d0 50%,
+      #d0d0d0 100%
+    );
+    background-size: 200% 100%;
+    background-position: 100% center;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    will-change: background-position;
+  }
+  @media (max-width: 900px) {
+    .about-content p { font-size: 1.05rem; margin-bottom: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .about-content .line {
+      background-position: 0% center;
+    }
+  }
+
   /* ============ PROBLEM ============ */
   #problem {
     position: relative;
@@ -417,133 +459,44 @@
     .problem-item__label::before { transform: scaleX(1); transition: none; }
   }
 
-  /* ============ AGITATE (scroll-pinned card stack) ============ */
+  /* ============ AGITATE (Why it matters) ============ */
   .agitate {
     background: var(--bg-gray);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 100px 0;
+    padding: 120px 0;
   }
   .agitate-inner {
-    max-width: 980px;
+    max-width: 760px;
     margin: 0 auto;
     padding: 0 40px;
-    width: 100%;
+    text-align: center;
   }
   .agitate .section-en {
     color: var(--accent);
     margin-bottom: 20px;
     display: block;
-    text-align: center;
   }
   .agitate-title {
     font-size: clamp(1.5rem, 2.8vw, 2.2rem);
     font-weight: 700;
-    line-height: 1.55;
+    line-height: 1.7;
     letter-spacing: 0.01em;
-    margin-bottom: 56px;
     color: var(--dark);
-    text-align: center;
-  }
-
-  .agitate-flow {
-    display: grid;
-    grid-template-columns: 1fr 40px 1fr 40px 1fr;
-    align-items: center;
-    gap: 0;
     margin-bottom: 40px;
-    position: relative;
   }
-  .agitate-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 32px 24px;
-    text-align: center;
-    position: relative;
-    will-change: transform;
-  }
-  .agitate-card__icon {
-    width: 56px;
-    height: 56px;
-    margin: 0 auto 20px;
-    background: #f0f7f6;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .agitate-card__num {
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-  .agitate-card__title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 12px;
-    line-height: 1.5;
-  }
-  .agitate-card__desc {
-    font-size: 0.85rem;
-    line-height: 1.8;
+  .agitate-body p {
+    font-size: 0.98rem;
+    line-height: 2.2;
     color: var(--text-light);
+    margin-bottom: 16px;
   }
-  .agitate-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    opacity: 0;
-  }
-
-  .agitate-conclusion {
-    background: var(--dark);
-    border-radius: 8px;
-    padding: 36px 48px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  .agitate-conclusion__icon {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    background: rgba(59,162,151,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .agitate-conclusion__text {
-    font-size: 1.05rem;
-    line-height: 1.9;
-    color: rgba(255,255,255,0.75);
-  }
-  .agitate-conclusion__text strong {
-    color: #fff;
-    font-weight: 600;
-  }
+  .agitate-body p:last-child { margin-bottom: 0; }
 
   @media (max-width: 760px) {
-    .agitate-flow {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .agitate-arrow { opacity: 1; transform: rotate(90deg); }
-    .agitate-conclusion { flex-direction: column; padding: 28px 24px; opacity: 1; transform: none; }
-    .agitate-card { transform: none !important; }
+    .agitate { padding: 80px 0; }
+    .agitate-inner { padding: 0 24px; }
+    .agitate-title { margin-bottom: 32px; }
+    .agitate-body p { font-size: 0.92rem; line-height: 2; }
   }
-
-  .agitate-anim-label { opacity: 0; transform: translateY(20px); }
-  .agitate-anim-title { opacity: 0; transform: translateY(20px); }
 
   /* ============ AEO / GEO (illustrated) ============ */
   .aeo-geo { padding: 120px 0; }
@@ -759,15 +712,15 @@
       <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <clipPath id="leftClip"><rect x="0" y="0" width="60" height="120"/></clipPath>
         <g clip-path="url(#leftClip)">
-          <ellipse cx="60" cy="65" rx="52" ry="46" fill="#F5E642"/>
-          <ellipse cx="60" cy="65" rx="44" ry="38" fill="#F7ED6A"/>
-          <path d="M60 27 L60 103" stroke="#F0D800" stroke-width="1.5" opacity="0.4"/>
-          <path d="M20 45 Q60 55 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
-          <path d="M16 75 Q40 72 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
-          <ellipse cx="60" cy="18" rx="8" ry="9" fill="#F5E642"/>
-          <ellipse cx="60" cy="112" rx="6" ry="7" fill="#F5E642"/>
+          <ellipse cx="60" cy="65" rx="52" ry="46" fill="#E8DB80"/>
+          <ellipse cx="60" cy="65" rx="44" ry="38" fill="#F0E5A8"/>
+          <path d="M60 27 L60 103" stroke="#c8a800" stroke-width="1.5" opacity="0.4"/>
+          <path d="M20 45 Q60 55 60 65" stroke="#c8a800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <path d="M16 75 Q40 72 60 65" stroke="#c8a800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <ellipse cx="60" cy="18" rx="8" ry="9" fill="#E8DB80"/>
+          <ellipse cx="60" cy="112" rx="6" ry="7" fill="#E8DB80"/>
         </g>
-        <path d="M60 0 L55 20 L62 35 L54 55 L63 75 L54 95 L60 120" stroke="#e8c800" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <path d="M60 0 L55 20 L62 35 L54 55 L63 75 L54 95 L60 120" stroke="#c8a800" stroke-width="2" fill="none" stroke-linejoin="round"/>
       </svg>
     </div>
 
@@ -776,15 +729,15 @@
       <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <clipPath id="rightClip"><rect x="60" y="0" width="60" height="120"/></clipPath>
         <g clip-path="url(#rightClip)">
-          <ellipse cx="60" cy="65" rx="52" ry="46" fill="#F5E642"/>
-          <ellipse cx="60" cy="65" rx="44" ry="38" fill="#F7ED6A"/>
-          <path d="M60 27 L60 103" stroke="#F0D800" stroke-width="1.5" opacity="0.4"/>
-          <path d="M100 45 Q60 55 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
-          <path d="M104 75 Q80 72 60 65" stroke="#F0D800" stroke-width="1.5" opacity="0.4" fill="none"/>
-          <ellipse cx="60" cy="18" rx="8" ry="9" fill="#F5E642"/>
-          <ellipse cx="60" cy="112" rx="6" ry="7" fill="#F5E642"/>
+          <ellipse cx="60" cy="65" rx="52" ry="46" fill="#E8DB80"/>
+          <ellipse cx="60" cy="65" rx="44" ry="38" fill="#F0E5A8"/>
+          <path d="M60 27 L60 103" stroke="#c8a800" stroke-width="1.5" opacity="0.4"/>
+          <path d="M100 45 Q60 55 60 65" stroke="#c8a800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <path d="M104 75 Q80 72 60 65" stroke="#c8a800" stroke-width="1.5" opacity="0.4" fill="none"/>
+          <ellipse cx="60" cy="18" rx="8" ry="9" fill="#E8DB80"/>
+          <ellipse cx="60" cy="112" rx="6" ry="7" fill="#E8DB80"/>
         </g>
-        <path d="M60 0 L65 20 L58 35 L66 55 L57 75 L66 95 L60 120" stroke="#e8c800" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <path d="M60 0 L65 20 L58 35 L66 55 L57 75 L66 95 L60 120" stroke="#c8a800" stroke-width="2" fill="none" stroke-linejoin="round"/>
         <path d="M68 12 Q88 -2 96 10 Q80 22 68 12Z" fill="#5AB552"/>
         <path d="M68 12 Q85 8 96 10" stroke="#3a8c34" stroke-width="1" fill="none"/>
       </svg>
@@ -814,7 +767,7 @@
   #lp-loader {
     position: fixed;
     inset: 0;
-    background: #fff;
+    background: #f8f8f6;
     z-index: 99999;
     display: flex;
     align-items: center;
@@ -854,6 +807,88 @@
 
 <script>
   (function() {
+    // nav-logo クリックでこのページへ来た場合は冒頭ローダーをスキップし、
+    // 代わりに nav-logo → hero-logo の拡大アニメーションを再生する
+    try {
+      if (sessionStorage.getItem('lpSkipLoader')) {
+        sessionStorage.removeItem('lpSkipLoader');
+        const skipLoader = document.getElementById('lp-loader');
+        const skipInner = document.getElementById('lp-loader-inner');
+        const playFly = sessionStorage.getItem('lpNavLogoFly');
+        if (playFly) sessionStorage.removeItem('lpNavLogoFly');
+
+        if (!playFly) {
+          if (skipLoader) skipLoader.style.display = 'none';
+          document.body.classList.remove('loading');
+          return;
+        }
+
+        // ローダー本体（レモン）を隠して背景レイヤーとしてのみ利用
+        if (skipInner) skipInner.style.display = 'none';
+
+        const playGrowth = () => {
+          const navLogoEl = document.querySelector('.nav-logo');
+          const heroLogoEl = document.querySelector('.hero-logo');
+          const navEl = document.getElementById('nav');
+          if (!navLogoEl || !heroLogoEl) {
+            if (skipLoader) skipLoader.style.display = 'none';
+            document.body.classList.remove('loading');
+            return;
+          }
+          const navSvg = navLogoEl.querySelector('svg');
+          const heroSvg = heroLogoEl.querySelector('svg') || heroLogoEl;
+          if (!navSvg) {
+            if (skipLoader) skipLoader.style.display = 'none';
+            document.body.classList.remove('loading');
+            return;
+          }
+          const navRect = navSvg.getBoundingClientRect();
+          const heroRect = heroSvg.getBoundingClientRect();
+
+          navLogoEl.style.opacity = '0';
+          if (navEl) navEl.classList.add('lp-loader-active');
+
+          const clone = document.createElement('div');
+          clone.className = 'lp-nav-logo-fly';
+          clone.innerHTML = navSvg.outerHTML;
+          clone.style.left = navRect.left + 'px';
+          clone.style.top = navRect.top + 'px';
+          clone.style.width = navRect.width + 'px';
+          clone.style.height = navRect.height + 'px';
+          document.body.appendChild(clone);
+
+          requestAnimationFrame(() => {
+            clone.style.left = heroRect.left + 'px';
+            clone.style.top = heroRect.top + 'px';
+            clone.style.width = heroRect.width + 'px';
+            clone.style.height = heroRect.height + 'px';
+          });
+
+          setTimeout(() => {
+            clone.style.opacity = '0';
+            if (skipLoader) {
+              skipLoader.style.transition = 'opacity 0.45s ease';
+              skipLoader.style.opacity = '0';
+            }
+            setTimeout(() => {
+              clone.remove();
+              if (skipLoader) skipLoader.style.display = 'none';
+              navLogoEl.style.opacity = '';
+              if (navEl) navEl.classList.remove('lp-loader-active');
+              document.body.classList.remove('loading');
+            }, 450);
+          }, 950);
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', playGrowth);
+        } else {
+          playGrowth();
+        }
+        return;
+      }
+    } catch (_) {}
+
     const run = () => {
       if (!window.gsap) { setTimeout(run, 50); return; }
       const loader    = document.getElementById('lp-loader');
@@ -985,6 +1020,24 @@
 </section>
 
 
+<!-- ========== ABOUT ========== -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-content reveal">
+      <p>
+        <span class="line">企業さまからのご依頼を受け、ホームページの企画・制作を行うほか、個人でもWebアプリやモバイルアプリの開発に取り組んでいます。</span>
+        <span class="line">また、AIを活用した業務支援のご提案も行っています。</span>
+      </p>
+      <p>
+        <span class="line">「システムで、毎日をもっと心地よく。」</span>
+        <span class="line">そんな小さくても確かな変化を届けられるよう、</span>
+        <span class="line">日々つくり続けています。</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+
 <!-- ========== PROBLEM ========== -->
 <section class="section" id="problem">
   <div class="container">
@@ -1076,63 +1129,16 @@
   </div>
 </section>
 
-<!-- ========== AGITATE ========== -->
+<!-- ========== AGITATE / Why it matters ========== -->
 <section class="agitate" id="agitate">
-  <div class="agitate-inner">
-    <p class="section-en agitate-anim-label">Why it matters</p>
-    <h2 class="agitate-title agitate-anim-title">「あるだけのサイト」が、静かに機会を失っている</h2>
-
-    <div class="agitate-flow">
-      <div class="agitate-card">
-        <div class="agitate-card__icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
-            <path d="M11 8v3h3" stroke-width="1.8"/>
-          </svg>
-        </div>
-        <p class="agitate-card__num">STEP 01</p>
-        <h3 class="agitate-card__title">AIに見つけてもらえない</h3>
-        <p class="agitate-card__desc">ChatGPT・Perplexityなどの AI検索に載らず、<br>比較検討の土俵に立てない</p>
-      </div>
-
-      <div class="agitate-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-
-      <div class="agitate-card">
-        <div class="agitate-card__icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <p class="agitate-card__num">STEP 02</p>
-        <h3 class="agitate-card__title">強みが伝わらず離脱</h3>
-        <p class="agitate-card__desc">訪問してもブランドの魅力が整理されていないため、「何の会社?」と離脱される</p>
-      </div>
-
-      <div class="agitate-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-
-      <div class="agitate-card">
-        <div class="agitate-card__icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-        </div>
-        <p class="agitate-card__num">STEP 03</p>
-        <h3 class="agitate-card__title">運用費が損失になる</h3>
-        <p class="agitate-card__desc">問い合わせ・売上に結びつかず、毎月のコストがそのまま赤字になり続ける</p>
-      </div>
-    </div>
-
-    <div class="agitate-conclusion">
-      <div class="agitate-conclusion__icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3ba297" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      </div>
-      <p class="agitate-conclusion__text">ひとつひとつは小さな綻びでも、積み重なれば<strong>事業の成長スピードを確実に削ります</strong>。「あるだけのサイト」は、毎月静かに機会を失い続けています。</p>
+  <div class="agitate-inner reveal">
+    <p class="section-en">Why it matters</p>
+    <h2 class="agitate-title">「あるだけのサイト」が、<br>静かに機会を失っている</h2>
+    <div class="agitate-body">
+      <p>検索結果の一番上は、もはや青いリンクではなくAIの回答です。そこに載らないということは、比較検討の土俵にすら立てないということ。</p>
+      <p>ブランドの魅力が整理されていないサイトは、訪問者に「で、何の会社だっけ」と思われた瞬間に離脱されます。</p>
+      <p>成果につながらないサイトは、毎月の運用費がそのまま損失になる——。</p>
+      <p>ひとつひとつは小さな綻びでも、積み重なれば事業の成長スピードを確実に削ります。</p>
     </div>
   </div>
 </section>
@@ -1536,6 +1542,36 @@
     window.addEventListener('resize', applyTileScale, { passive: true });
   })();
 
+  // ========== ABOUT: スクロール連動で行ごとに background-position をスライド ==========
+  // (yamatoen.or.jp と同じ実装：文字分解せず、行 <span> の background-clip:text で
+  //  グラデーションを左→右にスライドさせて文字色をグレー→黒に見せる)
+  window.addEventListener('load', () => {
+    const aboutSection = document.getElementById('about');
+    if (!aboutSection) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const lines = Array.from(aboutSection.querySelectorAll('.about-content .line'));
+    if (!lines.length) return;
+    const total = lines.length;
+
+    ScrollTrigger.create({
+      trigger: aboutSection,
+      start: 'top 75%',
+      end: 'bottom 40%',
+      scrub: true,
+      onUpdate: (self) => {
+        // 全体進捗を行数で分割して、行ごとに -100% → 0% へ順番に動かす
+        const overall = self.progress * total;
+        lines.forEach((line, i) => {
+          const lineP = Math.max(0, Math.min(1, overall - i));
+          line.style.backgroundPosition = (100 - lineP * 100) + '% center';
+        });
+      },
+    });
+  });
+
   // ========== PROBLEM: GSAP + ScrollTrigger + SplitType ==========
   window.addEventListener('load', () => {
     const problemSection = document.getElementById('problem');
@@ -1666,73 +1702,6 @@
     ScrollTrigger.refresh();
   });
 
-  // ========== AGITATE: スタック→スライドアニメーション ==========
-  window.addEventListener('load', () => {
-    if (!window.gsap || !window.ScrollTrigger) return;
-
-    const ease = 'power3.out';
-    const cards = gsap.utils.toArray('.agitate-card');
-    const arrows = gsap.utils.toArray('.agitate-arrow');
-    const conclusion = document.querySelector('.agitate-conclusion');
-    const label = document.querySelector('.agitate-anim-label');
-    const title = document.querySelector('.agitate-anim-title');
-
-    if (cards.length < 3) return;
-
-    if (window.matchMedia('(max-width: 760px)').matches) {
-      [label, title, ...cards, ...arrows, conclusion].forEach(el => {
-        if (el) { el.style.opacity = 1; el.style.transform = 'none'; }
-      });
-      return;
-    }
-
-    const c1 = cards[0].getBoundingClientRect();
-    const c2 = cards[1].getBoundingClientRect();
-    const c3 = cards[2].getBoundingClientRect();
-    const offset2 = c2.left - c1.left;
-    const offset3 = c3.left - c1.left;
-
-    gsap.set(cards[0], { zIndex: 3 });
-    gsap.set(cards[1], { x: -offset2, zIndex: 2,
-      boxShadow: '-4px 4px 0 rgba(0,0,0,0.05), -8px 8px 0 rgba(0,0,0,0.03)' });
-    gsap.set(cards[2], { x: -offset3, zIndex: 1,
-      boxShadow: '-8px 8px 0 rgba(0,0,0,0.05), -16px 16px 0 rgba(0,0,0,0.03)' });
-
-    gsap.to([label, title], {
-      opacity: 1, y: 0, duration: 0.9, ease, stagger: 0.15,
-      scrollTrigger: { trigger: '#agitate', start: 'top 80%' }
-    });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#agitate',
-        start: 'top top',
-        end: '+=240%',
-        pin: true,
-        scrub: 1.2,
-        anticipatePin: 1,
-      }
-    });
-
-    tl
-      .to(cards[1], {
-        x: 0, duration: 2,
-        ease: 'power2.inOut',
-        boxShadow: 'none',
-        clearProps: 'zIndex',
-      }, 0)
-      .to(arrows[0], { opacity: 1, duration: 0.6 }, 1.6)
-
-      .to(cards[2], {
-        x: 0, duration: 2,
-        ease: 'power2.inOut',
-        boxShadow: 'none',
-        clearProps: 'zIndex',
-      }, 2)
-      .to(arrows[1], { opacity: 1, duration: 0.6 }, 3.6)
-
-      .to(conclusion, { opacity: 1, y: 0, duration: 1, ease }, 4.2);
-  });
 </script>
 <script src="js/common.js"></script>
 

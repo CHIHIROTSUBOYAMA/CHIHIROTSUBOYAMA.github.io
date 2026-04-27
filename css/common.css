@@ -304,6 +304,48 @@ body.at-top .fab-contact { transform: translateY(20px); }
 
 /* テキストロゴ時代の遺物セレクタ（span 内文字色）— SVG 化後は無効だが、互換のため残置 */
 
+/* ============ NAV ロゴ クリック時の拡大トランジション ============ */
+.lp-nav-loader-bg {
+  position: fixed;
+  inset: 0;
+  background: #f8f8f6;
+  z-index: 99998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.lp-nav-loader-bg.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* ローディング中: nav リンクと logo は背景の上に残す（nav の白い背景だけ透過） */
+.nav.lp-loader-active {
+  z-index: 100000;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+.lp-nav-logo-fly {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  color: var(--dark);
+  --lp-accent: #E8DB80;
+  transform-origin: center center;
+  will-change: left, top, width, height, opacity;
+  transition:
+    left 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+    top 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+    width 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+    height 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.4s ease;
+}
+.lp-nav-logo-fly svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* ============ RESPONSIVE (共通コンポーネントのみ) ============ */
 @media (max-width: 900px) {
   .container { padding: 0 24px; }
